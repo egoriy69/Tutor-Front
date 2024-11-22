@@ -6,19 +6,25 @@
       :dataKey="(student) => student.id" :rowsPerPageOptions="[5, 10, 20]" :totalRecords="data?.totalElements"
       @update:rows="(e) => size = e" v-on:page="(e) => page = e.page" :lazy="true"
       @row-click="(e) => $router.push({ name: 'lessonsForm', params: { id: e.data.id } })">
-      <Column field="fullName" header="Ученик" style="width: 30%"></Column>
-      <Column field="date" header="Дата" style="width: 20%">
+      <Column field="fullName" header="Ученик" style="width: 20%"></Column>
+      <Column field="date" header="Дата" style="width: 15%">
         <template #body="slotProps">
-          {{ slotProps.data.date&&new Date(slotProps.data.date).toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute:'2-digit'}) }}
+          {{ formatUTC(slotProps.data.date) }}
         </template>
       </Column>
-      <Column field="categoryName" header="Категория" style="width: 20%"></Column>
+      <Column field="categoryName" header="Категория" style="width: 15%"></Column>
       <Column field="cost" header="Стоимость" style="width: 10%;text-align: center;"></Column>
       <Column field="paid" header="Оплачен" style="width: 10%;text-align: center;">
         <template #body="slotProps">
-          <BaseCheckbox v-model="slotProps.data.paid" style="display: flex;justify-content: center;"/>
-        </template></Column>
-      <Column field="homeWork" header="Задание" style="width: 20%;text-align: center;"></Column>
+          <BaseCheckbox v-model="slotProps.data.paid"
+            style="display: flex;justify-content: center;pointer-events: none;" />
+        </template>
+      </Column>
+      <Column field="homeWork" header="Задание" style="width: 10%;text-align: center;">
+        <template #body="slotProps">
+          <HomeWorkName :name="slotProps.data.homeWork"/>
+        </template>
+      </Column>
     </DataTable>
   </div>
   <RouterView />
@@ -32,6 +38,8 @@ import { ref, } from 'vue';
 
 import { lessonsService } from '../lessonsService';
 import BaseCheckbox from '@/app/components/UI/BaseCheckbox.vue';
+import HomeWorkName from '../components/HomeWorkName.vue';
+import { formatUTC } from '@/app/utils/utils';
 
 
 

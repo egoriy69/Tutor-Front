@@ -63,7 +63,7 @@ const formState = ref<Lesson>({
   paid: false,
   date: null
 });
-useAutoQuery(formState, { queryKey: ['lessonInfo'], queryFn: () => lessonsService.getStudentInfo(Number(route.params.id)), retry: 1, enabled: !!route.params.id, gcTime: 0 })
+useAutoQuery(formState, { queryKey: ['lessonInfo'], queryFn: () => lessonsService.getLessonInfo(Number(route.params.id)), retry: 1, enabled: !!route.params.id, gcTime: 0 })
 //trigger to call authenticate function
 //form validation
 const resolver = () => {
@@ -88,7 +88,7 @@ const onFormSubmit = async (e: FormSubmitEvent) => {
       lessonsService.createLesson({ e, queryClient, router })
     } else {
       e.values.id = route.params.id
-      lessonsService.updateStudent({ e, queryClient, router })
+      lessonsService.updateLesson({ e, queryClient, router })
     }
   }
 };

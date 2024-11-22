@@ -1,7 +1,7 @@
 <template>
-  <div :class="$style.checkBox" v-bind="$attrs">
-    <Checkbox :inputId="name" :name="name" v-model="model" binary/>
-    <label :for="name">{{ label }}</label>
+  <div :class="$style.checkBox" >
+    <Checkbox :inputId="name" :name="name" v-model="model" binary v-bind="$attrs"/>
+    <label v-if="label" :for="name">{{ label }}</label>
   </div>
 </template>
 

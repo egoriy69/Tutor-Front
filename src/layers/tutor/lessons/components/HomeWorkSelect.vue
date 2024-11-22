@@ -6,21 +6,18 @@
 </template>
 
 <script setup lang='ts'>
-import { LessonStatus } from '@/app/enums/LessonStatus';
+import { homeWork, LessonStatus } from '@/app/enums/LessonStatus';
 import { FloatLabel, Select } from 'primevue';
 import { ref } from 'vue';
 
 const homeWorkOptions = ref([
-  { name: 'Не сделано', value: LessonStatus.UNDONE },
-  { name: 'На проверке', value: LessonStatus.PROCESSING },
-  { name: 'Сделано', value: LessonStatus.DONE },
-  { name: 'Переделать', value: LessonStatus.REMAKE },
-  { name: 'Доделано', value: LessonStatus.FINISH },
-
+  { name: homeWork.UNDONE, value: LessonStatus.UNDONE },
+  { name: homeWork.PROCESSING, value: LessonStatus.PROCESSING },
+  { name: homeWork.DONE, value: LessonStatus.DONE },
+  { name: homeWork.REMAKE, value: LessonStatus.REMAKE },
+  { name: homeWork.FINISH, value: LessonStatus.FINISH },
 ]);
 const model = defineModel()
 </script>
 
-<style module>
-
-</style>
+<style module></style>
