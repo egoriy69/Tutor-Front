@@ -1,0 +1,85 @@
+@import './reset.css';
+
+
+
+
+
+@font-face {
+  font-family: OpenSans;
+  src: url('@/app/assets/fonts/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  font-family: OpenSans, Roboto Slab, Roboto, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 600;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --background: var(--ui-surface-0);
+  --frame: var(--ui-surface-50);
+  /* --gray-text: #A2A9C8; */
+  --gray-text: var(--ui-surface-400);
+  --gray-text-hover: var(--ui-surface-500);
+  --main-text: var(--ui-surface-800);
+  --main-text-hover: var(--ui-surface-500);
+  --black-text: #001330;
+  --white-btn-hover: #e2e1f0;
+  --blue-btn: #0066FF;
+  --blue-btn-hover: #139bff;
+  --red-btn: #ff5252;
+  --red-btn-hover: #dc0608;
+  --ui-floatlabel-over-active-top: -1rem;
+  --ui-message-text-sm-font-size: 0.8rem;
+}
+
+:root.dark {
+  --background: var(--ui-surface-950);
+  --frame: var(--ui-surface-900);
+  --gray-text-hover: var(--ui-surface-300);
+  --main-text: var(--ui-surface-300);
+  --main-text-hover: var(--ui-surface-0);
+}
+
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  /* transition: background-color,background, color 0.4s; */
+  /* color: var(--main-text); */
+
+  /* &:hover {
+    color: var(--main-text-hover);
+  } */
+}
+
+i {
+  cursor: pointer;
+  color: var(--main-text);
+  font-size: 1.5rem;
+  transition: color .4s;
+
+  &:hover {
+    color: var(--main-text-hover);
+  }
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+
+
+.p-inputtext, .p-password {
+  width: 100%;
+}
