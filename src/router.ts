@@ -75,9 +75,18 @@ const router = createRouter({
           path: 'students',
           name: 'students',
           component: () => import('./layers/tutor/students/pages/StudentsPage.vue'),
-          // beforeEnter: (to) => {
-          //   if (!to.query.status) to.query.status = ActiveStatus.ACTIVE
-          // },
+          children: [
+            {
+              path: 'form/:id?',
+              name: 'studentForm',
+              component: () => import('./layers/tutor/students/pages/StudentsForm.vue'),
+            }
+          ]
+        },
+        {
+          path: 'finance',
+          name: 'finance',
+          component: () => import('./layers/tutor/students/pages/StudentsPage.vue'),
           children: [
             {
               path: 'form/:id?',
