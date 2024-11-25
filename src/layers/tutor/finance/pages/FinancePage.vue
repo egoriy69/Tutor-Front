@@ -43,14 +43,16 @@ const setChartData = (data: Ref<Graph>) => {
         data: JSON.parse(JSON.stringify(data?.value?.datasets[2].data)),
         fill: false,
         // borderColor: borderColor.value,
-        tension: 0.4
+        tension: 0.4,
+        yAxisID: 'y',
       },
       {
         label: 'Прибыль',
         data: JSON.parse(JSON.stringify(data?.value?.datasets[0].data)),
         fill: false,
         // borderColor: borderColor.value,
-        tension: 0.4
+        tension: 0.4,
+        yAxisID: 'y1',
       }
     ]
   };
@@ -81,15 +83,38 @@ const setChartOptions = () => {
         }
 
       },
+      // y: {
+      //   ticks: {
+      //     color: textColorSecondary.value
+      //   },
+      //   grid: {
+      //     color: textColorSecondary.value,
+      //     display: false
+      //   }
+      // },
       y: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+        ticks: {
+          color: textColorSecondary.value
+        },
+        min:0
+      },
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'right',
         ticks: {
           color: textColorSecondary.value
         },
         grid: {
+          // drawOnChartArea: false, // only want the grid lines for one axis to show up
           color: textColorSecondary.value,
           display: false
-        }
-      }
+        },
+        min:0
+      },
     }
   };
 }
