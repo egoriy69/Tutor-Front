@@ -49,10 +49,7 @@ async function refreshToken() {
 
 // Обработка ответа и автоматическое обновление токена
 apiClient.interceptors.response.use(
-  (response) =>
-    new Promise((resolve) => {
-      setTimeout(() => resolve(response), 1000); // Задержка для симуляции
-    }),
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
@@ -68,8 +65,6 @@ apiClient.interceptors.response.use(
       }
     }
     // Любые другие ошибки
-    return new Promise((_, reject) => {
-      setTimeout(() => reject(error), 1000); // Задержка
-    });
+    return Promise.reject(error);
   }
 );
