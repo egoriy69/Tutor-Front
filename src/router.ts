@@ -43,7 +43,13 @@ const router = createRouter({
           // meta: { transition: 'reg' },
         },
         {
-          path: 'reset',
+          path: 'requestReset',
+          name: 'requestReset',
+          // meta: { transition: 'reset' },
+          component: () => import('./layers/auth/pages/RequestResetPage.vue')
+        },
+        {
+          path: 'reset/:resetToken',
           name: 'reset',
           // meta: { transition: 'reset' },
           component: () => import('./layers/auth/pages/ResetPage.vue')

@@ -17,14 +17,14 @@ onBeforeRouteUpdate(async (to, from) => {
   if (to.name === 'reg') {
     to.meta.transition = 'reg'
   }
-  if (to.name === 'reset') {
-    to.meta.transition = 'reset'
+  if (to.name === 'requestReset') {
+    to.meta.transition = 'requestReset'
   }
   if (to.name === 'login' && from.name === 'reg') {
     to.meta.transition = 'login'
   }
-  if (to.name === 'login' && from.name === 'reset') {
-    to.meta.transition = 'loginFromReset'
+  if (to.name === 'login' && from.name === 'requestReset') {
+    to.meta.transition = 'loginFromRequestReset'
   }
 })
 </script>
@@ -51,7 +51,7 @@ onBeforeRouteUpdate(async (to, from) => {
 
   --login-height: 380px;
   --reg-height: 550px;
-  --reset-height: 290px;
+  --requestReset-height: 290px;
 }
 
 :global(.reg-enter-active) {
@@ -78,25 +78,25 @@ onBeforeRouteUpdate(async (to, from) => {
   height: var(--reg-height);
 }
 
-:global(.loginFromReset-enter-active) {
+:global(.loginFromRequestReset-enter-active) {
   transition: max-height .5s,opacity 1s;
   opacity: 1;
   max-height: var(--login-height);
 }
 
-:global(.loginFromReset-enter-from) {
+:global(.loginFromRequestReset-enter-from) {
   height: 0;
   opacity: 0;
-  max-height: var(--reset-height);
+  max-height: var(--requestReset-height);
 }
 
-:global(.reset-enter-active) {
+:global(.requestReset-enter-active) {
   transition: height .5s,opacity 1s;
   opacity: 1;
-  height: var(--reset-height);
+  height: var(--requestReset-height);
 }
 
-:global(.reset-enter-from) {
+:global(.requestReset-enter-from) {
   max-height: 0;
   opacity: 0;
   height: var(--login-height);

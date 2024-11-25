@@ -6,7 +6,7 @@
       <InputWithError :form="$form" name="email" label="Электронная почта*" />
       <InputWithError :form="$form" name="password" label="Пароль*" :password="true" />
       <Button type="submit" label="Войти" />
-      <RouterLink :to="{ name: 'reset' }" :class="$style.reset">Забыли пароль?</RouterLink>
+      <RouterLink :to="{ name: 'requestReset' }" :class="$style.reset">Забыли пароль?</RouterLink>
       <RouterLink :to="{ name: 'reg' }" :class="$style.reset">Регистрация</RouterLink>
     </Form>
   </div>

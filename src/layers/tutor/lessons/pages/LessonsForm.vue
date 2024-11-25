@@ -19,7 +19,7 @@
         <label for="shortDescription">Краткое описание</label>
       </FloatLabel>
       <FloatLabel>
-        <DatePicker v-model="formState.date" dateFormat="dd.mm.yy"  showTime showIcon hourFormat="24" fluid inputId="over_label" />
+        <DatePicker v-model="formState.date" dateFormat="dd.mm.yy"  showTime showIcon hourFormat="24" fluid inputId="over_label" :manualInput="true"/>
         <label for="over_label">Дата</label>
       </FloatLabel>
       <BaseCheckbox v-model="formState.paid" name="paid" label="Оплачен" />
