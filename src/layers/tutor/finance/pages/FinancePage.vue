@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { useQuery } from "@tanstack/vue-query";
 import Chart from "primevue/chart";
-import { ref, onMounted, watchEffect, watch, type Ref } from "vue";
+import { ref, onMounted, watchEffect, watch, type Ref, nextTick } from "vue";
 import { financeService } from "../financeService";
 import type { Graph } from "../FinanceTypes";
 import { useCssVar, useDark } from "@vueuse/core";
@@ -25,9 +25,10 @@ watch(data, () => {
   }
 })
 const isDark = useDark()
-watch(isDark, () => {
+watch(isDark, async () => {
+  await nextTick();
   chartOptions.value = setChartOptions();
-})
+});
 
 const chartData = ref();
 const chartOptions = ref();
@@ -50,7 +51,6 @@ const setChartData = (data: Ref<Graph>) => {
 const setChartOptions = () => {
   // const documentStyle = getComputedStyle(document.documentElement);
   const textColor = useCssVar('--main-text', document.documentElement);
-  console.log(textColor.value)
   const textColorSecondary = useCssVar('--gray-text', document.documentElement);
 
   return {
