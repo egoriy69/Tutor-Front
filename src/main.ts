@@ -12,7 +12,7 @@ import { MyPreset } from './app/assets/theme'
 import PrimeVue from 'primevue/config';
 import setupRouterGuards from './app/navigationGuards'
 import KeyFilter from 'primevue/keyfilter';
-
+import ru from '@/app/assets/locale/ru.json'
 
 const app = createApp(App)
 const pinia = createPinia();
@@ -30,7 +30,8 @@ app.use(PrimeVue, {
       cssLayer: true
 
     }
-  }
+  },
+  locale:ru
 });
 setupRouterGuards(router);
 app.directive('keyfilter', KeyFilter);

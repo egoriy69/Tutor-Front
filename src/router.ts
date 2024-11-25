@@ -7,7 +7,13 @@ import RegPage from './layers/auth/pages/RegPage.vue'
 import { RolesEnum } from './app/enums/Roles'
 
 
+import 'vue-router';
 
+declare module 'vue-router' {
+  interface RouteMeta {
+    transition?: string; // Или другой ожидаемый тип
+  }
+}
 
 
 
@@ -27,16 +33,19 @@ const router = createRouter({
         {
           path: 'login',
           name: 'login',
-          component: LoginPage
+          component: LoginPage,
+          // meta: { transition: 'login' },
         },
         {
           path: 'registration/:regToken?',
           name: 'reg',
-          component: RegPage
+          component: RegPage,
+          // meta: { transition: 'reg' },
         },
         {
           path: 'reset',
           name: 'reset',
+          // meta: { transition: 'reset' },
           component: () => import('./layers/auth/pages/ResetPage.vue')
         }
       ]

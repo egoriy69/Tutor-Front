@@ -19,23 +19,17 @@
 import { useQuery } from '@tanstack/vue-query';
 import { studentsPageService } from '../studentsPageService';
 import { Button, Column, DataTable, SelectButton } from 'primevue';
-import { ref, watch } from 'vue';
+import { ref,  } from 'vue';
 import { ActiveStatus } from '@/app/enums/ActiveStatus';
-import { useRoute } from 'vue-router';
+
 
 const activeStatus = ref(ActiveStatus.ACTIVE);
-const options = ref(['ACTIVE', 'REQUEST']);
-
-const route = useRoute()
+const options = ref([ActiveStatus.ACTIVE, ActiveStatus.REQUEST]);
 
 const page = ref(0)
 const size = ref(10)
 const { data } = useQuery({ queryKey: ['students', size, page, activeStatus], queryFn: () => studentsPageService.getStudents({ page: page.value, size: size.value, activeStatus: activeStatus.value }) })
 
-watch(activeStatus, () => {
-  route.query.status = activeStatus.value
-  console.log(route.query.status)
-}, { immediate: true })
 </script>
 
 <style module>

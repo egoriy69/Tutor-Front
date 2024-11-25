@@ -18,7 +18,10 @@
         <Textarea v-model="formState.shortDescription" name="shortDescription" :rows="5" fluid style="resize: none" />
         <label for="shortDescription">Краткое описание</label>
       </FloatLabel>
-      <DatePicker v-model="formState.date" showTime hourFormat="24" fluid />
+      <FloatLabel>
+        <DatePicker v-model="formState.date" showTime showIcon hourFormat="24" fluid inputId="over_label" />
+        <label for="over_label">Дата</label>
+      </FloatLabel>
       <BaseCheckbox v-model="formState.paid" name="paid" label="Оплачен" />
       <Button type="submit" :label="isCreateForm ? 'Создать' : 'Редактировать'" />
       <Button label="Удалить" v-if="!isCreateForm" severity="danger" variant="outlined" @click="handleDelete" />
