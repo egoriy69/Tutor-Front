@@ -34,7 +34,7 @@ const chartData = ref();
 const chartOptions = ref();
 
 const setChartData = (data: Ref<Graph>) => {
-  const borderColor = useCssVar('--ui-cian-400', document.documentElement)
+  // const borderColor = useCssVar('--ui-cian-400', document.documentElement)
   return {
     labels: data?.value?.labels,
     datasets: [
@@ -42,7 +42,14 @@ const setChartData = (data: Ref<Graph>) => {
         label: 'Длительность',
         data: JSON.parse(JSON.stringify(data?.value?.datasets[2].data)),
         fill: false,
-        borderColor: borderColor.value,
+        // borderColor: borderColor.value,
+        tension: 0.4
+      },
+      {
+        label: 'Прибыль',
+        data: JSON.parse(JSON.stringify(data?.value?.datasets[0].data)),
+        fill: false,
+        // borderColor: borderColor.value,
         tension: 0.4
       }
     ]
