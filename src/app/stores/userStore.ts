@@ -8,7 +8,7 @@ export const useUserStore = defineStore('userStore', () => {
     lastName: localStorage.getItem('lastName') || '',
     firstName: localStorage.getItem('firstName') || '',
     role: (localStorage.getItem('role') as RolesEnum) || RolesEnum.NONE,
-    accessToken: localStorage.getItem('accessToken')|| '',
+    accessToken: localStorage.getItem('accessToken') || '',
   })
   const setUser = (data: AuthenticationResponse) => {
     user.value.lastName = data.lastName;
@@ -34,11 +34,14 @@ export const useUserStore = defineStore('userStore', () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
   }
+  const setAccessToken = (accessToken:string) => {
+    user.value.accessToken = accessToken
+  }
   const userRole = computed(() => (user.value.role))
   const isLoggedIn = computed(() => user.value.role !== RolesEnum.NONE)
   const userAccessToken = computed(() => user.value.accessToken)
 
 
-  return { user, setUser, clearUser, userRole, isLoggedIn, userAccessToken }
+  return { user, setUser, clearUser, userRole, isLoggedIn, userAccessToken,setAccessToken }
 })
 

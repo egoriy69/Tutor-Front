@@ -86,14 +86,8 @@ const router = createRouter({
         {
           path: 'finance',
           name: 'finance',
-          component: () => import('./layers/tutor/students/pages/StudentsPage.vue'),
-          children: [
-            {
-              path: 'form/:id?',
-              name: 'studentForm',
-              component: () => import('./layers/tutor/students/pages/StudentsForm.vue'),
-            }
-          ]
+          component: () => import('./layers/tutor/finance/pages/FinancePage.vue'),
+
         },
 
       ]

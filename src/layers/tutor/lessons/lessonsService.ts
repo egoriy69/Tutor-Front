@@ -14,7 +14,7 @@ export const lessonsService = {
   },
   getLessonInfo: async (id: number) => {
     const response = await apiClient.get(`/lesson/oneLesson/${id}`)
-    response.data.date = new Date(response.data.date)
+    response.data.date = response.data.date ? new Date(response.data.date) : null
     return response.data
   },
   getListOfStudents: async () => {
