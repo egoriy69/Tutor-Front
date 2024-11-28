@@ -1,30 +1,38 @@
 <template>
   <Dialog modal :header="isCreateForm ? 'Создать урок' : 'Редактировать урок'" v-model:visible="visible"
-    v-on:hide="$router.go(-1)" :dismissableMask="true" :class="$style.wrapper">
+    v-on:hide="$router.go(-1)" :dismissableMask="true" :class="$style.wrapper" :contentClass="$style.content">
     <Form :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit">
-      <FloatLabel>
-        <InputNumber v-model="formState.cost" inputId="cost" fluid />
-        <label for="cost">Цена</label>
-      </FloatLabel>
-      <DurationSelect v-model="formState.duration" />
-      <FloatLabel>
-        <InputText v-model="formState.miroLink" name="miroLink" fluid />
-        <label for="miroLink">Ссылка на миро</label>
-      </FloatLabel>
-      <CategorySelect v-model="formState.categoryId" />
-      <HomeWorkSelect v-model="formState.homeWork" />
-      <StudentsSelect v-model="formState.studentId" />
-      <FloatLabel>
-        <Textarea v-model="formState.shortDescription" name="shortDescription" :rows="5" fluid style="resize: none" />
-        <label for="shortDescription">Краткое описание</label>
-      </FloatLabel>
-      <FloatLabel>
-        <DatePicker v-model="formState.date" dateFormat="dd.mm.yy"  showTime showIcon hourFormat="24" fluid inputId="over_label" :manualInput="true"/>
-        <label for="over_label">Дата</label>
-      </FloatLabel>
-      <BaseCheckbox v-model="formState.paid" name="paid" label="Оплачен" />
-      <Button type="submit" :label="isCreateForm ? 'Создать' : 'Редактировать'" />
-      <Button label="Удалить" v-if="!isCreateForm" severity="danger" variant="outlined" @click="handleDelete" />
+      <div :class="$style.container">
+        <FloatLabel>
+          <InputNumber v-model="formState.cost" inputId="cost" fluid />
+          <label for="cost">Цена</label>
+        </FloatLabel>
+        <DurationSelect v-model="formState.duration" />
+        <FloatLabel>
+          <InputText v-model="formState.miroLink" name="miroLink" fluid />
+          <label for="miroLink">Ссылка на миро</label>
+        </FloatLabel>
+        <CategorySelect v-model="formState.categoryId" />
+        <HomeWorkSelect v-model="formState.homeWork" />
+        <StudentsSelect v-model="formState.studentId" />
+      </div>
+      <div :class="$style.splitContainer">
+        <div :class="$style.container">
+          <FloatLabel>
+            <Textarea v-model="formState.shortDescription" name="shortDescription" :rows="5" fluid
+              style="resize: none" />
+            <label for="shortDescription">Краткое описание</label>
+          </FloatLabel>
+          <FloatLabel style="height: fit-content;">
+            <DatePicker v-model="formState.date" dateFormat="dd.mm.yy" showIcon hourFormat="24" fluid
+              inputId="over_label" :manualInput="true" />
+            <label for="over_label">Дата</label>
+          </FloatLabel>
+          <BaseCheckbox v-model="formState.paid" name="paid" label="Оплачен" />
+        </div>
+        <Button type="submit" :label="isCreateForm ? 'Создать' : 'Редактировать'" />
+        <Button label="Удалить" v-if="!isCreateForm" severity="danger" variant="outlined" @click="handleDelete" />
+      </div>
     </Form>
   </Dialog>
 </template>
@@ -103,26 +111,48 @@ const handleDelete = () => {
 <style module>
 .wrapper {
   background-color: var(--frame);
-  min-width: 500px;
+  min-width: 0;
+  max-width: 870px;
+  width: 100%;
+  padding: 1.2rem;
 
+  &>:global(.p-dialog-header) {
+    padding: 15px;
+  }
+}
+
+
+.content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 15px;
 }
 
 .form {
-  margin-top: 15px;
   display: flex;
-  flex-direction: column;
   gap: 20px;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 
-.checkBox {
+.container {
   display: flex;
-  align-items: center;
-  color: var(--gray-text);
+  flex-direction: column;
+  gap: 25px;
+  /* justify-content: space-between; */
+  flex: 1 1 0;
+  max-width: 400px;
+  width: 100%;
+}
 
+.splitContainer {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-
-  &>label {
-    cursor: pointer;
-  }
+  justify-content: space-between;
+  flex: 1 1 0;
+  max-width: 400px;
+  width: 100%;
 }
 </style>

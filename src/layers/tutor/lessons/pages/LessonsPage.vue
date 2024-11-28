@@ -1,6 +1,6 @@
 <template>
   <div :class='$style.wrapper'>
-    <Button as="router-link" label="Создать урок" :to="{ name: 'lessonsForm' }" />
+    <div style="width: 100%;"><Button as="router-link" label="Создать урок" :to="{ name: 'lessonsForm' }" /></div>
 
     <DataTable :value="data?.lessonsList" paginator :rows="size" tableStyle="min-width: 50rem" :class="$style.table"
       :dataKey="(student) => student.id" :rowsPerPageOptions="[5, 10, 20]" :totalRecords="data?.totalElements"
@@ -9,7 +9,7 @@
       <Column field="fullName" header="Ученик" style="width: 20%"></Column>
       <Column field="date" header="Дата" style="width: 15%">
         <template #body="slotProps">
-          {{ formatUTC(slotProps.data.date) }}
+          {{ dayjs.utc(slotProps.data.date).format('DD.MM.YYYY') }}
         </template>
       </Column>
       <Column field="categoryName" header="Категория" style="width: 15%"></Column>
@@ -22,7 +22,7 @@
       </Column>
       <Column field="homeWork" header="Задание" style="width: 10%;text-align: center;">
         <template #body="slotProps">
-          <HomeWorkName :name="slotProps.data.homeWork"/>
+          <HomeWorkName :name="slotProps.data.homeWork" />
         </template>
       </Column>
     </DataTable>
@@ -39,7 +39,7 @@ import { ref, } from 'vue';
 import { lessonsService } from '../lessonsService';
 import BaseCheckbox from '@/app/components/UI/BaseCheckbox.vue';
 import HomeWorkName from '../components/HomeWorkName.vue';
-import { formatUTC } from '@/app/utils/utils';
+import dayjs from 'dayjs';
 
 
 
@@ -58,9 +58,15 @@ const { data } = useQuery({ queryKey: ['lessons', size, page], queryFn: () => le
   gap: 20px;
   align-items: center;
 
-  &>a {
+  &>div>a {
+    background-color: transparent;
+    color: var(--ui-primary-400);
+    border: none;
     width: fit-content;
-    color: var(--ui-button-primary-color);
+
+    &:hover {
+      color: var(--ui-primary-600);
+    }
   }
 
 
@@ -72,7 +78,7 @@ const { data } = useQuery({ queryKey: ['lessons', size, page], queryFn: () => le
   overflow: hidden;
   box-shadow: 0 0 2px var(--gray-text);
 
-  & tr {
+  & tbody>tr {
     cursor: pointer;
   }
 }

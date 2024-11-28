@@ -1,13 +1,13 @@
 
 
 import { apiClient } from "@/app/api";
-import { formatToLocalDate } from "@/app/utils/utils";
+import { formatToLocalDate } from "@/app/utils/date";
 
 
 
 
 
-export const financeService = {
+export const graphService = {
   getGraph: async (type: string, startDate: Date, endDate: Date) => {
     const newStartDate = startDate ? formatToLocalDate(startDate) : ''
     const newEndDate = endDate ? formatToLocalDate(endDate) : ''

@@ -12,16 +12,16 @@
 import { useQuery } from "@tanstack/vue-query";
 import Chart from "primevue/chart";
 import { ref, onMounted, watch, type Ref, nextTick } from "vue";
-import { financeService } from "../../financeService";
 import type { Graph } from "../../FinanceTypes";
 import { useCssVar, useDark } from "@vueuse/core";
 import GraphTypeSelect from "./GraphTypeSelect.vue";
-import RangeDatePicker from "./RangeDatePicker.vue";
+import RangeDatePicker from "../../../../../app/components/RangeDatePicker.vue";
+import { graphService } from "../../services/graphService";
 
 const type = ref('date')
 const range = ref([])
 
-const { data } = useQuery<Graph>({ queryKey: ['graph', type, range], queryFn: () => financeService.getGraph(type.value, range.value[0], range.value[1]) })
+const { data } = useQuery<Graph>({ queryKey: ['graph', type, range], queryFn: () => graphService.getGraph(type.value, range.value[0], range.value[1]) })
 const trigger = ref(false)
 onMounted(() => {
   chartOptions.value = setChartOptions();
@@ -132,17 +132,17 @@ const setChartOptions = () => {
 
 <style lang="css" module>
 .wrapper {
-  max-width: 800px;
+  max-width: 780px;
   height: 400px;
-  padding-top: 20px;
-
-
+  width: 100%;
+flex-grow: 1;
 }
 
 .chart {
   height: 100%;
 }
-.menu{
+
+.menu {
   display: flex;
   gap: 20px;
 }

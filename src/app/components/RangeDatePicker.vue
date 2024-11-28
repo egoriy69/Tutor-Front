@@ -16,7 +16,8 @@ const model = defineModel<(Date | null)[]>()
 
 <style module>
 .datePicker {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
 
   &>span {
     top: 45%;

@@ -18,4 +18,19 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  // build: {
+  //   rollupOptions: {
+  //     // https://rollupjs.org/guide/en/#outputmanualchunks
+  //     output: {
+  //       manualChunks: {
+  //         'group-lessons': [
+  //           './src/UserDetails',
+  //           './src/UserDashboard',
+  //           './src/UserProfileEdit',
+  //         ],
+  //       },
+  //     },
+  //   },
+  // },
 })
+

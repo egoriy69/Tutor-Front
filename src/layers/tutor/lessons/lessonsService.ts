@@ -3,6 +3,7 @@ import type { FormSubmitEvent } from "@primevue/forms";
 import { apiClient } from "@/app/api";
 import type { QueryClient } from "@tanstack/vue-query";
 import type { Router } from "vue-router";
+import { dateToJSONNoLocale, ISOToDateNoLocale } from "@/app/utils/date";
 
 
 
@@ -14,7 +15,7 @@ export const lessonsService = {
   },
   getLessonInfo: async (id: number) => {
     const response = await apiClient.get(`/lesson/oneLesson/${id}`)
-    response.data.date = response.data.date ? new Date(response.data.date) : null
+    response.data.date = ISOToDateNoLocale(response.data.date)
     return response.data
   },
   getListOfStudents: async () => {
@@ -22,7 +23,7 @@ export const lessonsService = {
     return response.data
   },
   createLesson: async ({ e, queryClient, router }: { e: FormSubmitEvent, queryClient: QueryClient, router: Router }) => {
-    e.values.date = e.values.date ? e.values.date.toISOString() : null
+    e.values.date = dateToJSONNoLocale(e.values.date)
     apiClient.post('/lesson/create', e.values).then(() => {
       queryClient.invalidateQueries({ queryKey: ['lessons'] })
       router.go(-1)
@@ -33,7 +34,7 @@ export const lessonsService = {
   updateLesson: async ({ e, queryClient, router }: { e: FormSubmitEvent, queryClient: QueryClient, router: Router }) => {
     const id = e.values.id
     delete e.values.id
-    e.values.date = e.values.date ? e.values.date.toISOString() : null
+    e.values.date = dateToJSONNoLocale(e.values.date)
     console.log(e.values)
     apiClient.patch(`/lesson/${id}`, e.values).then(() => {
       queryClient.invalidateQueries({ queryKey: ['lessons'] })

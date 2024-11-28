@@ -2,8 +2,13 @@ import '@tanstack/vue-query';
 import axios, { AxiosError } from 'axios';
 import { useUserStore } from './stores/userStore';
 
+
+
+const BASE_URL = 'http://localhost:8383/api/v1'
+// const BASE_URL = '/api/v1'
+
 export const apiClient = axios.create({
-  baseURL: 'http://localhost:8080/api/v1',
+  baseURL: BASE_URL,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -36,7 +41,7 @@ apiClient.interceptors.request.use(
 async function refreshToken() {
   const userStore = useUserStore();
   try {
-    const response = await axios.post('http://localhost:8080/api/v1/auth/refreshToken', {
+    const response = await axios.post(`${BASE_URL}/auth/refreshToken`, {
       refreshToken: localStorage.getItem('refreshToken'),
     });
     userStore.setAccessToken(response.data.accessToken); // Сохраняем новый accessToken

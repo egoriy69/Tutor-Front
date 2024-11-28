@@ -14,7 +14,7 @@ export const studentsPageService = {
   // },
   getStudents: async ({ page, size, activeStatus }: { page: number, size: number, activeStatus: string }) => {
     const response = await apiClient.get(`/student/get/${activeStatus}?page=${page}&size=${size}`)
-    return { studentsList: response.data._embedded.getUserDTOList.reverse(), totalElements: response.data.page.totalElements }
+    return { studentsList: response.data._embedded.getUserDTOList, totalElements: response.data.page.totalElements }
   },
   getStudentInfo: async (id: number) => {
     const response = await apiClient.get(`/student/getInfoStudent/${id}`)
@@ -47,9 +47,7 @@ export const studentsPageService = {
     })
   },
   repeatRequestRegistration: async (id: number) => {
-    console.log(id)
     const response = await apiClient.post(`/admin/repeatRequestRegistration/${id}`)
-    console.log(response.data)
     return response.data
   }
 

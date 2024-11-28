@@ -1,6 +1,6 @@
 <template>
-  <div :class="$style.checkBox" >
-    <Checkbox :inputId="name" :name="name" v-model="model" binary v-bind="$attrs"/>
+  <div :class="$style.checkBox">
+    <Checkbox :inputId="name" :name="name" v-model="model" binary v-bind="$attrs" />
     <label v-if="label" :for="name">{{ label }}</label>
   </div>
 </template>
@@ -23,7 +23,7 @@ const model = defineModel()
   display: flex;
   align-items: center;
   color: var(--gray-text);
-
+  margin-left: 2px;
   gap: 10px;
 
   &>label {

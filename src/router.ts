@@ -9,6 +9,7 @@ import { RolesEnum } from './app/enums/Roles'
 
 import 'vue-router';
 
+
 declare module 'vue-router' {
   interface RouteMeta {
     transition?: string; // Или другой ожидаемый тип
@@ -68,19 +69,29 @@ const router = createRouter({
         {
           path: 'lessons',
           name: 'lessons',
-          component: () => import('./layers/tutor/lessons/pages/LessonsPage.vue'),
+          component: () =>
+            Promise.all([
+              import('./layers/tutor/lessons/pages/LessonsPage.vue'),
+              import('./layers/tutor/lessons/pages/LessonsForm.vue'),
+            ]).then(([LessonsPage]) => LessonsPage.default),
+          // component: () => import('./layers/tutor/lessons/pages/LessonsPage.vue'),
           children: [
             {
               path: 'form/:id?',
               name: 'lessonsForm',
               component: () => import('./layers/tutor/lessons/pages/LessonsForm.vue'),
-            }
+            },
           ]
         },
         {
           path: 'students',
           name: 'students',
-          component: () => import('./layers/tutor/students/pages/StudentsPage.vue'),
+          component: () =>
+            Promise.all([
+              import('./layers/tutor/students/pages/StudentsPage.vue'),
+              import('./layers/tutor/students/pages/StudentsForm.vue'),
+            ]).then(([LessonsPage]) => LessonsPage.default),
+          // component: () => import('./layers/tutor/students/pages/StudentsPage.vue'),
           children: [
             {
               path: 'form/:id?',
@@ -93,7 +104,18 @@ const router = createRouter({
           path: 'finance',
           name: 'finance',
           component: () => import('./layers/tutor/finance/pages/FinancePage.vue'),
-
+          children: [
+            {
+              path: 'category/form/:id?',
+              name:'categoryForm',
+              component:() => import('./layers/tutor/finance/components/CategoryTable/CategoryForm.vue')
+            },
+            {
+              path: 'transaction/form/:id?',
+              name:'transactionForm',
+              component:() => import('./layers/tutor/finance/components/Transactions/TransactionForm.vue')
+            }
+          ]
         },
 
       ]

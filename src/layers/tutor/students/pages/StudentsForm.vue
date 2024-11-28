@@ -13,7 +13,7 @@
       <BaseCheckbox v-if="isCreateForm" name="sendMail" label="Отправить письмо для регистрации" v-model="formState.sendMail"/>
       <LoadingButton type="button" label="Отправить повторный запрос на регистрацию" variant="outlined"
         v-if="$route.query.status === ActiveStatus.REQUEST" severity="contrast"
-        @click="() => studentsPageService.repeatRequestRegistration(Number($route.params.id))" />
+        @click.stop="studentsPageService.repeatRequestRegistration(Number($route.params.id))" />
       <Button type="submit" :label="isCreateForm ? 'Создать' : 'Редактировать'" />
       <Button label="Удалить" v-if="!isCreateForm" severity="danger" variant="outlined" @click="handleDelete" />
     </Form>

@@ -2,7 +2,7 @@
   <div :class='$style.wrapper'>
     <nav>
       <RouterLink :to="{ name: 'lessons' }">Уроки</RouterLink>
-      <RouterLink :to="{ name: 'finance' }">Расходы</RouterLink>
+      <RouterLink :to="{ name: 'finance' }">Финансы</RouterLink>
       <RouterLink :to="{ name: 'students' }">Ученики</RouterLink>
     </nav>
     <div>

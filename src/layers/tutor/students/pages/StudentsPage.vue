@@ -1,8 +1,10 @@
 <template>
   <div :class='$style.wrapper'>
-    <Button as="router-link" label="Создать студента" :to="{ name: 'studentForm' }" />
-    <SelectButton v-model="activeStatus" :options="options" :class="$style.selectBtn"
-      :optionLabel="(option) => option === ActiveStatus.ACTIVE ? 'Активные' : 'Заявки'" />
+    <div style="display: flex;gap: 20px; width: 100%;">
+      <SelectButton v-model="activeStatus" :options="options" :class="$style.selectBtn"
+        :optionLabel="(option) => option === ActiveStatus.ACTIVE ? 'Активные' : 'Заявки'" />
+      <Button as="router-link" label="Создать студента" :to="{ name: 'studentForm' }" />
+    </div>
     <DataTable :value="data?.studentsList" paginator :rows="size" tableStyle="min-width: 50rem" :class="$style.table"
       :dataKey="(student) => student.id" :rowsPerPageOptions="[5, 10, 20]" :totalRecords="data?.totalElements"
       @update:rows="(e) => size = e" v-on:page="(e) => page = e.page" :lazy="true"
@@ -19,7 +21,7 @@
 import { useQuery } from '@tanstack/vue-query';
 import { studentsPageService } from '../studentsPageService';
 import { Button, Column, DataTable, SelectButton } from 'primevue';
-import { ref,  } from 'vue';
+import { ref, } from 'vue';
 import { ActiveStatus } from '@/app/enums/ActiveStatus';
 
 
@@ -40,9 +42,15 @@ const { data } = useQuery({ queryKey: ['students', size, page, activeStatus], qu
   gap: 20px;
   align-items: center;
 
-  &>a {
+  &>div>a {
+    background-color: transparent;
+    color: var(--ui-primary-400);
+    border: none;
     width: fit-content;
-    color: var(--ui-button-primary-color);
+
+    &:hover {
+      color: var(--ui-primary-600);
+    }
   }
 
 
@@ -54,7 +62,7 @@ const { data } = useQuery({ queryKey: ['students', size, page, activeStatus], qu
   overflow: hidden;
   box-shadow: 0 0 2px var(--gray-text);
 
-  & tr {
+  & tbody>tr {
     cursor: pointer;
   }
 }

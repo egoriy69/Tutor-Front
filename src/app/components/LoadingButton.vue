@@ -3,7 +3,7 @@
     <Transition name="slide-up">
       <Button icon="pi pi-check" v-if="loading" label="" severity="success" variant="outlined"
         style="pointer-events: none;" />
-      <Button @mousedown="load" v-bind="$attrs" v-else />
+      <Button @mousedown.stop="load" v-bind="$attrs" v-else />
     </Transition>
   </div>
 </template>
