@@ -17,10 +17,12 @@ import { useCssVar, useDark } from "@vueuse/core";
 import GraphTypeSelect from "./GraphTypeSelect.vue";
 import RangeDatePicker from "../../../../../app/components/RangeDatePicker.vue";
 import { graphService } from "../../services/graphService";
+import type { ScriptableContext } from "chart.js";
+
+
 
 const type = ref('date')
 const range = ref([])
-
 const { data } = useQuery<Graph>({ queryKey: ['graph', type, range], queryFn: () => graphService.getGraph(type.value, range.value[0], range.value[1]) })
 const trigger = ref(false)
 onMounted(() => {
@@ -81,7 +83,6 @@ const setChartOptions = () => {
   // const documentStyle = getComputedStyle(document.documentElement);
   const textColor = useCssVar('--main-text', document.documentElement);
   const textColorSecondary = useCssVar('--gray-text', document.documentElement);
-
   return {
     maintainAspectRatio: false,
     aspectRatio: 0.6,
@@ -89,6 +90,15 @@ const setChartOptions = () => {
       legend: {
         labels: {
           color: textColor.value
+        }
+      }
+    },
+    elements: {
+      point: {
+        radius: 8,
+        backgroundColor: function (context:ScriptableContext<'line'>) {
+          const dataset = context.dataset;
+          return dataset.borderColor; // Использует цвет границы как фон
         }
       }
     },
@@ -123,7 +133,6 @@ const setChartOptions = () => {
           color: textColorSecondary.value,
           display: false
         },
-        min: 0
       },
     }
   };
@@ -135,7 +144,7 @@ const setChartOptions = () => {
   max-width: 780px;
   height: 400px;
   width: 100%;
-flex-grow: 1;
+  flex-grow: 1;
 }
 
 .chart {
