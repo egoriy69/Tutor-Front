@@ -1,9 +1,8 @@
 <template>
   <div :class='$style.wrapper'>
     <img src="@/app/assets/images/logo-cutted.png" />
-    <RouterView v-slot="{ Component, route }">
-
-      <Transition :name="route.meta.transition">
+    <RouterView v-slot="{ Component }">
+      <Transition name="auth">
         <Component :is="Component" />
       </Transition>
     </RouterView>
@@ -11,20 +10,25 @@
 </template>
 
 <script setup lang='ts'>
+import { ref } from 'vue';
 import { onBeforeRouteUpdate } from 'vue-router';
 
+const toHeight = ref('0px')
+const fromHeight = ref('0px')
+
+type RouteName = 'login' | 'reg' | 'requestReset' | 'reset'
+
+const height: Record<RouteName, string> = {
+  'login': '380px',
+  'reg': '550px',
+  'requestReset': '290px',
+  'reset': '340px',
+}
+
 onBeforeRouteUpdate(async (to, from) => {
-  if (to.name === 'reg') {
-    to.meta.transition = 'reg'
-  }
-  if (to.name === 'requestReset') {
-    to.meta.transition = 'requestReset'
-  }
-  if (to.name === 'login' && from.name === 'reg') {
-    to.meta.transition = 'login'
-  }
-  if (to.name === 'login' && from.name === 'requestReset') {
-    to.meta.transition = 'loginFromRequestReset'
+  if (to.name && from.name) {
+    toHeight.value = height[to.name as RouteName] ?? '0px'
+    fromHeight.value = height[from.name as RouteName] ?? '0px'
   }
 })
 </script>
@@ -52,53 +56,18 @@ onBeforeRouteUpdate(async (to, from) => {
   --login-height: 380px;
   --reg-height: 550px;
   --requestReset-height: 290px;
+  --reset-height: 340px;
 }
 
-:global(.reg-enter-active) {
-  transition: max-height .5s,opacity 1s;
+:global(.auth-enter-active) {
+  transition: height .5s, opacity 1s;
   opacity: 1;
-  max-height: var(--reg-height);
+  height: v-bind(toHeight);
 }
 
-:global(.reg-enter-from) {
-  height: 0;
-  opacity: 0;
-  max-height: var(--login-height);
-}
-
-:global(.login-enter-active) {
-  transition: height .5s,opacity 1s;
-  opacity: 1;
-  height: var(--login-height);
-}
-
-:global(.login-enter-from) {
+:global(.auth-enter-from) {
   max-height: 0;
   opacity: 0;
-  height: var(--reg-height);
-}
-
-:global(.loginFromRequestReset-enter-active) {
-  transition: max-height .5s,opacity 1s;
-  opacity: 1;
-  max-height: var(--login-height);
-}
-
-:global(.loginFromRequestReset-enter-from) {
-  height: 0;
-  opacity: 0;
-  max-height: var(--requestReset-height);
-}
-
-:global(.requestReset-enter-active) {
-  transition: height .5s,opacity 1s;
-  opacity: 1;
-  height: var(--requestReset-height);
-}
-
-:global(.requestReset-enter-from) {
-  max-height: 0;
-  opacity: 0;
-  height: var(--login-height);
+  height: v-bind(fromHeight);
 }
 </style>

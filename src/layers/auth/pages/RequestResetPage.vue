@@ -31,7 +31,7 @@ const resolver = ({ values }: FormResolverOptions) => {
   };
 }
 const onFormSubmit = async (e: FormSubmitEvent) => {
-  if (e.valid) authService.reset(e)
+  if (e.valid) authService.requestReset(e)
 
 };
 </script>
