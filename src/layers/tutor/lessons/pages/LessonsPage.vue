@@ -6,13 +6,14 @@
       @update:rows="(e) => size = e" v-on:page="(e) => page = e.page" :lazy="true"
       @row-click="(e) => $router.push({ name: 'lessonsForm', params: { id: e.data.id } })">
       <Column field="fullName" header="Ученик" style="width: 20%"></Column>
-      <Column field="shortDescription" header="Описание" style="width: 20%"></Column>
+      <Column field="grade" header="Класс" style="width: 5%;text-align: center;"></Column>
+      <Column field="shortDescription" header="Описание" style="width: 30%"></Column>
       <Column field="date" header="Дата" style="width: 5%;text-align: center;">
         <template #body="slotProps">
           {{ dayjs.utc(slotProps.data.date).format('DD.MM.YYYY') }}
         </template>
       </Column>
-      <Column field="categoryName" header="Категория" style="width: 20%"></Column>
+      <!-- <Column field="categoryName" header="Категория" style="width: 20%"></Column> -->
       <Column field="cost" header="Стоимость" style="width: 10%;text-align: center;"></Column>
       <Column field="paid" header="Оплачен" style="width: 10%;text-align: center;">
         <template #body="slotProps">
