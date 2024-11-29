@@ -1,7 +1,7 @@
 <template>
   <Dialog modal :header="isCreateForm ? 'Создать категорию' : 'Редактировать категорию'" v-model:visible="visible"
     v-on:hide="$router.go(-1)" :dismissableMask="true" :class="$style.wrapper">
-    <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit">
+    <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit" autocomplete="off">
       <InputWithError :form="$form" name="name" label="Название*" v-model="formState.name" />
       <SelectButton v-model="formState.status" :options="options" optionValue="value" optionLabel='name' dataKey="name"/>
       <Button type="submit" :label="isCreateForm ? 'Создать' : 'Редактировать'" />

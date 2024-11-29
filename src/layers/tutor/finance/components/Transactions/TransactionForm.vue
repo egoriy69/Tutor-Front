@@ -1,7 +1,7 @@
 <template>
   <Dialog modal :header="isCreateForm ? 'Создать транзакцию' : 'Редактировать транзакцию'" v-model:visible="visible"
     v-on:hide="$router.go(-1)" :dismissableMask="true" :class="$style.wrapper">
-    <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit">
+    <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit"  autocomplete="off">
       <InputWithError :form="$form" name="name" label="Название*" v-model="formState.name" style="min-height: 42px;" />
       <FloatLabel>
         <InputNumber v-model="formState.cost" inputId="cost" fluid />

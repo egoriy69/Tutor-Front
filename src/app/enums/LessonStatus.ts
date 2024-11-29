@@ -17,7 +17,7 @@ export enum homeWork {
 export enum homeWorkColors {
   UNDONE = "var(--ui-red-400)",
   PROCESSING = 'var(--ui-violet-400)',
-  DONE = 'var(--ui-sky-400)',
+  DONE = 'var(--ui-green-400)',
   REMAKE = 'var(--ui-orange-400)',
-  FINISH = 'var(--ui-green-400)'
+  FINISH = 'var(--ui-sky-400)'
 }

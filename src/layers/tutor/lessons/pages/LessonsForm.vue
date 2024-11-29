@@ -1,7 +1,7 @@
 <template>
   <Dialog modal :header="isCreateForm ? 'Создать урок' : 'Редактировать урок'" v-model:visible="visible"
     v-on:hide="$router.go(-1)" :dismissableMask="true" :class="$style.wrapper" :contentClass="$style.content">
-    <Form :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit">
+    <Form :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit" autocomplete="off">
       <div :class="$style.container">
         <FloatLabel>
           <InputNumber v-model="formState.cost" inputId="cost" fluid />
@@ -20,7 +20,7 @@
         <div :class="$style.container">
           <FloatLabel>
             <Textarea v-model="formState.shortDescription" name="shortDescription" :rows="5" fluid
-              style="resize: none" />
+              style="resize: none" autocomplete="off"/>
             <label for="shortDescription">Краткое описание</label>
           </FloatLabel>
           <FloatLabel style="height: fit-content;">
@@ -70,9 +70,9 @@ const formState = ref<Lesson>({
   cost: null,
   categoryId: 1,
   studentId: null,
-  homeWork: LessonStatus.UNDONE,
+  homeWork: LessonStatus.PROCESSING,
   paid: false,
-  date: null
+  date: new Date
 });
 useAutoQuery(formState, { queryKey: ['lessonInfo'], queryFn: () => lessonsService.getLessonInfo(Number(route.params.id)), retry: 1, enabled: !!route.params.id, gcTime: 0 })
 //trigger to call authenticate function

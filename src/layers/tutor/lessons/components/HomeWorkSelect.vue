@@ -11,8 +11,8 @@ import { FloatLabel, Select } from 'primevue';
 import { ref } from 'vue';
 
 const homeWorkOptions = ref([
-  { name: homeWork.UNDONE, value: LessonStatus.UNDONE },
   { name: homeWork.PROCESSING, value: LessonStatus.PROCESSING },
+  { name: homeWork.UNDONE, value: LessonStatus.UNDONE },
   { name: homeWork.DONE, value: LessonStatus.DONE },
   { name: homeWork.REMAKE, value: LessonStatus.REMAKE },
   { name: homeWork.FINISH, value: LessonStatus.FINISH },

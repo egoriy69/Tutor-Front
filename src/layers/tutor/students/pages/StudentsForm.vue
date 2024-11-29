@@ -1,7 +1,7 @@
 <template>
   <Dialog modal :header="isCreateForm ? 'Создать студента' : 'Редактировать студента'" v-model:visible="visible"
     v-on:hide="$router.go(-1)" :dismissableMask="true" :class="$style.wrapper">
-    <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit">
+    <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit"  autocomplete="off">
       <InputWithError :form="$form" name="lastName" label="Фамилия*" v-model="formState.lastName" />
       <InputWithError :form="$form" name="firstName" label="Имя*" v-model="formState.firstName" />
       <InputWithError :form="$form" name="email" label="Электронная почта*" v-model="formState.email" />
