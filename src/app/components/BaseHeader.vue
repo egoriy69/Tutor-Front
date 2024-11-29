@@ -4,9 +4,9 @@
       <slot></slot>
     </nav>
     <div>
-      <RouterLink to="">
+      <button style="background: none; padding: 0;" @click="() => visible = !visible">
         <i class="pi pi-user"></i>
-      </RouterLink>
+      </button>
       <UseDark v-slot="{ isDark, toggleDark }">
         <i v-show="isDark" @click="toggleDark()" class="pi pi-sun"></i>
         <i v-show="!isDark" @click="toggleDark()" class="pi pi-moon"></i>
@@ -14,13 +14,18 @@
       <i class="pi pi-sign-out" @click="logOut"></i>
     </div>
   </div>
+  <ProfileForm v-model="visible" />
 </template>
 
 <script setup lang='ts'>
 import { useUserStore } from '@/app/stores/userStore';
 import { UseDark } from '@vueuse/components';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import ProfileForm from './ProfileForm.vue';
 
+
+const visible = ref(false)
 
 const router = useRouter()
 const userStore = useUserStore()

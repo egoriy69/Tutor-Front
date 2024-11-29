@@ -16,6 +16,7 @@ export type AuthenticationResponse = {
   role: RolesEnum
   lastName: string
   firstName: string
+  email:string
   accessToken: string
   refreshToken?: string
 }

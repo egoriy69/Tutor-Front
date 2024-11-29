@@ -20,7 +20,7 @@ export const emailError = (error: AxiosError, e: FormSubmitEvent) => {
     error: string | undefined
   }
   const data = error.response?.data as ErrorResponse
-  if (data.error && typeof (data.error) === 'string') {
+  if (data && data.error && typeof (data.error) === 'string') {
     e.states.email.error = {
       message: data.error,
     };
