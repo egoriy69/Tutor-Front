@@ -1,6 +1,6 @@
 
 import { apiClient } from "@/app/api";
-import {  dateToJSONNoLocale, formatToLocalDate, ISOToDateNoLocale } from "@/app/utils/date";
+import { dateToJSONNoLocale, formatToLocalDate, ISOToDateNoLocale } from "@/app/utils/date";
 import type { FormSubmitEvent } from "@primevue/forms";
 import type { QueryClient } from "@tanstack/vue-query";
 import type { Router } from "vue-router";
@@ -25,6 +25,8 @@ export const transactionService = {
     e.values.createdAt = dateToJSONNoLocale(e.values.createdAt)
     apiClient.post('/transaction', e.values).then(() => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] })
+      queryClient.invalidateQueries({ queryKey: ['graph'] })
+      queryClient.invalidateQueries({ queryKey: ['categories'] })
       router.go(-1)
     }).catch(error => {
       console.log(error)
@@ -36,6 +38,8 @@ export const transactionService = {
     e.values.createdAt = dateToJSONNoLocale(e.values.createdAt)
     apiClient.patch(`/transaction/${id}`, e.values).then(() => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] })
+      queryClient.invalidateQueries({ queryKey: ['graph'] })
+      queryClient.invalidateQueries({ queryKey: ['categories'] })
       router.go(-1)
     }).catch(error => {
       console.log(error)
@@ -44,6 +48,8 @@ export const transactionService = {
   deleteTransaction: async (id: number, queryClient: QueryClient, router: Router) => {
     apiClient.delete(`/transaction/${id}`).then(() => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] })
+      queryClient.invalidateQueries({ queryKey: ['graph'] })
+      queryClient.invalidateQueries({ queryKey: ['categories'] })
       router.go(-1)
     })
   },

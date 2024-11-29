@@ -1,6 +1,6 @@
 <template>
   <div :class='$style.wrapper'>
-    <div v-if="$route.path.startsWith('/tutor')" style="width: 100%;"><Button as="router-link" label="Создать урок" :to="{ name: 'lessonsForm' }" /></div>
+    <div v-if="$route.name==='tutor'" style="width: 100%;"><Button as="router-link" label="Создать урок" :to="{ name: 'lessonsForm' }" /></div>
     <DataTable :value="data?.lessonsList" paginator :rows="size" tableStyle="min-width: 50rem" :class="$style.table"
       :dataKey="(student) => student.id" :rowsPerPageOptions="[5, 10, 20]" :totalRecords="data?.totalElements"
       @update:rows="(e) => size = e" v-on:page="(e) => page = e.page" :lazy="true"
@@ -35,10 +35,11 @@ import { useQuery } from '@tanstack/vue-query';
 import { Button, Column, DataTable } from 'primevue';
 import { ref, } from 'vue';
 
-import { lessonsService } from '../lessonsService';
 import BaseCheckbox from '@/app/components/UI/BaseCheckbox.vue';
-import HomeWorkName from '../components/HomeWorkName.vue';
+
 import dayjs from 'dayjs';
+import { lessonsService } from '@/layers/tutor/lessons/lessonsService';
+import HomeWorkName from '@/layers/tutor/lessons/components/HomeWorkName.vue';
 
 
 

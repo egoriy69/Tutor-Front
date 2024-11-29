@@ -50,7 +50,7 @@ export const authService = {
     })
   },
   getRegData: async (route: RouteLocationNormalizedLoaded): Promise<RegData> => {
-    const response = await apiClient.get(`/auth/register/${route.params.regToken}`, { headers: { 'Authorization': '' } })
+    const response = await apiClient.get(`/auth/registration/${route.params.regToken}`, { headers: { 'Authorization': '' } })
     return response.data
   },
   requestReset: async (e: FormSubmitEvent) => {

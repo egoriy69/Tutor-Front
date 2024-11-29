@@ -2,8 +2,6 @@
 
 import { createRouter, createWebHistory } from 'vue-router'
 import AuthLayout from './layers/auth/layouts/AuthLayout.vue'
-import LoginPage from './layers/auth/pages/LoginPage.vue'
-import RegPage from './layers/auth/pages/RegPage.vue'
 import { RolesEnum } from './app/enums/Roles'
 
 
@@ -34,13 +32,13 @@ const router = createRouter({
         {
           path: 'login',
           name: 'login',
-          component: LoginPage,
+          component: () => import('./layers/auth/pages/LoginPage.vue')
           // meta: { transition: 'login' },
         },
         {
           path: 'registration/:regToken?',
           name: 'reg',
-          component: RegPage,
+          component: () => import('./layers/auth/pages/RegPage.vue'),
           // meta: { transition: 'reg' },
         },
         {
@@ -60,7 +58,7 @@ const router = createRouter({
     {
       path: '/tutor',
       name: 'tutor',
-      component: () => import('./layers/tutor/TutorLayout.vue'),
+      component: () => import('./layers/tutor/layouts/TutorLayout.vue'),
       redirect: { name: 'lessons' },
       meta: {
         allowedRoles: [RolesEnum.TUTOR]
@@ -107,17 +105,33 @@ const router = createRouter({
           children: [
             {
               path: 'category/form/:id?',
-              name:'categoryForm',
-              component:() => import('./layers/tutor/finance/components/CategoryTable/CategoryForm.vue')
+              name: 'categoryForm',
+              component: () => import('./layers/tutor/finance/components/CategoryTable/CategoryForm.vue')
             },
             {
               path: 'transaction/form/:id?',
-              name:'transactionForm',
-              component:() => import('./layers/tutor/finance/components/Transactions/TransactionForm.vue')
+              name: 'transactionForm',
+              component: () => import('./layers/tutor/finance/components/Transactions/TransactionForm.vue')
             }
           ]
         },
 
+      ]
+    },
+    {
+      path: '/student',
+      name: 'student',
+      component: () => import('./layers/student/layouts/StudentLayout.vue'),
+      redirect: { name: 'studentLessons' },
+      meta: {
+        allowedRoles: [RolesEnum.STUDENT]
+      },
+      children: [
+        {
+          path: 'lessons',
+          name: 'studentLessons',
+          component: () => import('./layers/tutor/lessons/pages/LessonsPage.vue'),
+        }
       ]
     },
     {

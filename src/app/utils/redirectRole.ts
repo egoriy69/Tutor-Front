@@ -13,4 +13,7 @@ export const redirectRole = () => {
   if (userStore.userRole === RolesEnum.TUTOR) {
     router.push({ name: 'tutor' })
   }
+  if (userStore.userRole === RolesEnum.STUDENT) {
+    router.push({ name: 'student' })
+  }
 }

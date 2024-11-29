@@ -7,7 +7,7 @@
 
 <script setup lang='ts'>
 import { RouterView } from 'vue-router';
-import TutorHeader from './components/TutorHeader.vue';
+import TutorHeader from '../components/StudentHeader.vue';
 
 </script>
 
