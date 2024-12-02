@@ -6,6 +6,7 @@ import { useUserStore } from "@/app/stores/userStore"
 import { redirectRole } from "@/app/utils/redirectRole"
 import type { AxiosError, AxiosResponse } from "axios"
 import { inputError } from "@/app/utils/errors"
+import type { Ref } from "vue"
 
 
 const successAuth = (response: AxiosResponse) => {
@@ -53,8 +54,8 @@ export const authService = {
     const response = await apiClient.get(`/auth/registration/${route.params.regToken}`, { headers: { 'Authorization': '' } })
     return response.data
   },
-  requestReset: async (e: FormSubmitEvent) => {
-    apiClient.post(`/auth/resetPassword/requestLink`, e.values, { headers: { 'Authorization': '' } }).catch(error => {
+  requestReset: async (e: FormSubmitEvent, submitted: Ref<boolean>) => {
+    apiClient.post(`/auth/resetPassword/requestLink`, e.values, { headers: { 'Authorization': '' } }).then(() => submitted.value = true).catch(error => {
       emailError(error, e)
     })
   },

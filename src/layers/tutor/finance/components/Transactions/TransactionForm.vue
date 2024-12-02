@@ -1,19 +1,24 @@
 <template>
   <Dialog modal :header="isCreateForm ? 'Создать транзакцию' : 'Редактировать транзакцию'" v-model:visible="visible"
     v-on:hide="$router.go(-1)" :dismissableMask="true" :class="$style.wrapper">
-    <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit"  autocomplete="off">
-      <InputWithError :form="$form" name="name" label="Название*" v-model="formState.name" style="min-height: 42px;" />
-      <FloatLabel>
+    <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit"
+      autocomplete="off">
+      <InputWithError :form="$form" name="name" label="Название*" v-model="formState.name" style="min-height: 63px;" />
+      <FloatLabel style="min-height: 63px;">
         <InputNumber v-model="formState.cost" inputId="cost" fluid />
         <label for="cost">Цена</label>
       </FloatLabel>
-      <AllCategoriesSelect v-model="formState.categoryId" />
-      <FloatLabel style="height: fit-content;">
+      <div style="min-height: 63px;">
+        <AllCategoriesSelect v-model="formState.categoryId" />
+        <Message severity="error" size="small" variant="simple">{{ ($form as
+          any).categoryId?.error?.message }}
+        </Message>
+      </div>
+      <FloatLabel style="height: fit-content">
         <DatePicker v-model="formState.createdAt" dateFormat="dd.mm.yy" showIcon hourFormat="24" fluid
           inputId="over_label" :manualInput="true" />
         <label for="over_label">Дата</label>
       </FloatLabel>
-
       <Button type="submit" :label="isCreateForm ? 'Создать' : 'Редактировать'" />
       <Button label="Удалить" v-if="!isCreateForm" severity="danger" variant="outlined" @click="handleDelete" />
     </Form>
@@ -22,7 +27,7 @@
 
 <script setup lang='ts'>
 import { Form, type FormSubmitEvent } from '@primevue/forms';
-import { Button, DatePicker, Dialog, FloatLabel, InputNumber, } from 'primevue';
+import { Button, DatePicker, Dialog, FloatLabel, InputNumber, Message, } from 'primevue';
 import { computed, ref } from 'vue';
 import InputWithError from '@/app/components/InputWithError.vue';
 import { useQueryClient } from '@tanstack/vue-query';
@@ -39,13 +44,13 @@ const visible = ref(true);
 const queryClient = useQueryClient()
 type Errors = {
   name: Array<object>
-
+  categoryId: Array<object>
 }
 
 const formState = ref<Transaction>({
   name: '',
   cost: 0,
-  categoryId: 1,
+  categoryId: undefined,
   createdAt: null
 });
 const route = useRoute()
@@ -57,6 +62,7 @@ useAutoQuery(formState, { queryKey: ['studentInfo'], queryFn: () => transactionS
 const resolver = () => {
   const errors: Errors = {
     name: existValidation(formState.value?.name, 'Введите название'),
+    categoryId: existValidation(formState.value?.categoryId, 'Выберите категорию'),
   };
   return {
     values: formState.value,

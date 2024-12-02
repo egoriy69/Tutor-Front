@@ -96,7 +96,7 @@ const setChartOptions = () => {
     elements: {
       point: {
         radius: 8,
-        backgroundColor: function (context:ScriptableContext<'line'>) {
+        backgroundColor: function (context: ScriptableContext<'line'>) {
           const dataset = context.dataset;
           return dataset.borderColor; // Использует цвет границы как фон
         }
@@ -117,6 +117,7 @@ const setChartOptions = () => {
         type: 'linear',
         display: true,
         position: 'left',
+        suggestedMin: 0,
         ticks: {
           color: textColorSecondary.value
         },
@@ -125,6 +126,7 @@ const setChartOptions = () => {
         type: 'linear',
         display: true,
         position: 'right',
+        suggestedMin: 0,
         ticks: {
           color: textColorSecondary.value
         },

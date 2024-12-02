@@ -1,10 +1,12 @@
 <template>
   <div :class='$style.wrapper'>
-    <Form v-slot="$form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit"
-      class="flex flex-col gap-4 w-full sm:w-60">
-      <h3>Введите электронную почту<br /> для сброса пароля</h3>
-      <InputWithError :form="$form" name="email" label="Электронная почта*" />
-      <Button type="submit" label="Отправить" />
+    <Form v-slot="$form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit" style="height: 290px;">
+      <h3 v-if="submitted">Успешно!<br />Письмо для сброса пароля отправлено на вашу почту</h3>
+      <div v-else style="display: contents;">
+        <h3>Введите электронную почту<br /> для сброса пароля</h3>
+        <InputWithError :form="$form" name="email" label="Электронная почта*" />
+        <Button type="submit" label="Отправить" />
+      </div>
       <RouterLink :to="{ name: 'login' }" :class="$style.reset">Вернуться к авторизации</RouterLink>
     </Form>
   </div>
@@ -17,8 +19,9 @@ import { Button } from 'primevue';
 import { RouterLink } from 'vue-router';
 import { authService } from '../authService';
 import { existValidation } from '@/app/utils/validation';
+import { ref } from 'vue';
 
-
+const submitted = ref(false)
 
 //form validation
 const resolver = ({ values }: FormResolverOptions) => {
@@ -31,7 +34,9 @@ const resolver = ({ values }: FormResolverOptions) => {
   };
 }
 const onFormSubmit = async (e: FormSubmitEvent) => {
-  if (e.valid) authService.requestReset(e)
+  if (e.valid) {
+    authService.requestReset(e, submitted)
+  }
 
 };
 </script>

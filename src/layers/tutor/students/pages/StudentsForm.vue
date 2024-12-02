@@ -59,8 +59,8 @@ useAutoQuery(formState, { queryKey: ['studentInfo'], queryFn: () => studentsPage
 //form validation
 const resolver = () => {
   const errors: Errors = {
-    firstName: existValidation(formState.value?.firstName, 'Введите фамилию'),
-    lastName: existValidation(formState.value?.lastName, 'Введите имя'),
+    lastName: existValidation(formState.value?.lastName, 'Введите фамилию'),
+    firstName: existValidation(formState.value?.firstName, 'Введите имя'),
     email: existValidation(formState.value?.firstName, 'Введите электронную почту'),
   };
   return {
