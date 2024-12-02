@@ -19,8 +19,8 @@
       <div :class="$style.splitContainer">
         <div :class="$style.container">
           <FloatLabel>
-            <Textarea v-model="formState.shortDescription" name="shortDescription" :rows="5" fluid
-              style="resize: none" autocomplete="off"/>
+            <Textarea v-model="formState.shortDescription" name="shortDescription" :rows="5" fluid style="resize: none"
+              autocomplete="off" />
             <label for="shortDescription">Краткое описание</label>
           </FloatLabel>
           <FloatLabel style="height: fit-content;">
@@ -54,7 +54,7 @@ import CategorySelect from '../components/CategorySelect.vue';
 import HomeWorkSelect from '../components/HomeWorkSelect.vue';
 import { LessonStatus } from '@/app/enums/LessonStatus';
 import StudentsSelect from '../components/StudentsSelect.vue';
-import { existValidation } from '@/app/utils/validation';
+import { existValidation, regexValidation } from '@/app/utils/validation';
 import BaseCheckbox from '@/app/components/UI/BaseCheckbox.vue';
 
 
@@ -78,8 +78,9 @@ useAutoQuery(formState, { queryKey: ['lessonInfo'], queryFn: () => lessonsServic
 //trigger to call authenticate function
 //form validation
 const resolver = () => {
-  const errors: { studentId: Array<object> } = {
+  const errors: { studentId: Array<object>, miroLink: Array<object> } = {
     studentId: existValidation(formState.value?.studentId, 'Выберите студента'),
+    miroLink: regexValidation(formState.value?.miroLink, 'Введите корректную ссылку', /^https:\/\/miro\..+/),
   };
   return {
     values: formState.value,

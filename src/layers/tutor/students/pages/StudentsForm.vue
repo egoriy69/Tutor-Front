@@ -1,16 +1,24 @@
 <template>
   <Dialog modal :header="isCreateForm ? 'Создать студента' : 'Редактировать студента'" v-model:visible="visible"
     v-on:hide="$router.go(-1)" :dismissableMask="true" :class="$style.wrapper">
-    <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit"  autocomplete="off">
+    <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit"
+      autocomplete="off">
       <InputWithError :form="$form" name="lastName" label="Фамилия*" v-model="formState.lastName" />
       <InputWithError :form="$form" name="firstName" label="Имя*" v-model="formState.firstName" />
       <InputWithError :form="$form" name="email" label="Электронная почта*" v-model="formState.email" />
-      <FloatLabel>
-        <InputText name="grade" v-keyfilter="{ pattern: /^(11|10|[0-9])?$/, validateOnly: true }"
-          v-model="formState.grade" />
-        <label for="grade">Класс</label>
+      <div style="min-height: 63px;">
+        <FloatLabel>
+          <InputText name="grade" v-keyfilter="{ pattern: /^(11|10|[0-9])?$/, validateOnly: true }"
+            v-model="formState.grade" />
+          <label for="grade">Класс</label>
+        </FloatLabel>
+      </div>
+      <FloatLabel v-if="$route.query.status ===  ActiveStatus.NONACTIVE||$route.query.status ===  ActiveStatus.ACTIVE">
+        <SelectStudentStatus v-model="formState.active" />
+        <label for="status">Статус</label>
       </FloatLabel>
-      <BaseCheckbox v-if="isCreateForm" name="sendMail" label="Отправить письмо для регистрации" v-model="formState.sendMail"/>
+      <BaseCheckbox v-if="isCreateForm" name="sendMail" label="Отправить письмо для регистрации"
+        v-model="formState.sendMail" />
       <LoadingButton type="button" label="Отправить повторный запрос на регистрацию" variant="outlined"
         v-if="$route.query.status === ActiveStatus.REQUEST" severity="contrast"
         @click.stop="studentsPageService.repeatRequestRegistration(Number($route.params.id))" />
@@ -34,6 +42,7 @@ import { useRoute, useRouter } from 'vue-router';
 import LoadingButton from '@/app/components/LoadingButton.vue';
 import { ActiveStatus } from '@/app/enums/ActiveStatus';
 import BaseCheckbox from '@/app/components/UI/BaseCheckbox.vue';
+import SelectStudentStatus from '../components/SelectStudentStatus.vue';
 
 
 const visible = ref(true);
@@ -44,14 +53,16 @@ type Errors = {
   email: Array<object>
 }
 
+const route = useRoute()
 const formState = ref<Student>({
   firstName: '',
   lastName: '',
   email: '',
   grade: '',
+  active: (route.query.status as string) || null,
   sendMail: false
 });
-const route = useRoute()
+
 const router = useRouter()
 const isCreateForm = computed(() => !!!route.params.id)
 useAutoQuery(formState, { queryKey: ['studentInfo'], queryFn: () => studentsPageService.getStudentInfo(Number(route.params.id)), retry: 1, enabled: !!route.params.id, gcTime: 0 })

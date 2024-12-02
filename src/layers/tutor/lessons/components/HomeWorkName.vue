@@ -17,7 +17,7 @@ const { name } = defineProps<Props>()
 
 <style module>
 .wrapper {
-  padding: 5px 10px;
+  padding: 5px;
   border-radius: 10px;
 }
 </style>

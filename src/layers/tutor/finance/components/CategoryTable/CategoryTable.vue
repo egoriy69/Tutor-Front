@@ -10,8 +10,7 @@
           <i class="pi pi-arrow-up-left" />
         </template>
         <template #body="{ data }">
-          <i v-if="data.status" class="pi pi-arrow-up" style="color:var(--ui-green-400)" />
-          <i v-else class="pi pi-arrow-down" style="color:var(--ui-red-400)" />
+          <CategoryArrows :status="data.status"/>
         </template>
       </Column>
       <Column field="name" header="Категория" style="width: 75%"></Column>
@@ -27,6 +26,7 @@ import { categoryService } from '../../services/categoryService';
 import { Button, Column, DataTable } from 'primevue';
 import SelectCategoryPeriod from '../SelectPeriod.vue';
 import { ref } from 'vue';
+import CategoryArrows from '../CategoryArrows.vue';
 
 const range = ref([])
 const { data } = useQuery({ queryKey: ['categories', range], queryFn: () => categoryService.getCategories(range.value[0], range.value[1]) })

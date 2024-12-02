@@ -8,6 +8,7 @@ export type Student = {
   email: string,
   grade: string,
   role?: string
+  active?: string | null
   sendMail?: boolean
 }
 export type receivedStudent = {

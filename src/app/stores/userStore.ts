@@ -55,7 +55,11 @@ export const useUserStore = defineStore('userStore', () => {
       firstName: e.values.firstName,
       lastName: e.values.lastName
     }
+
     apiClient.patch(`/user`, body).then(() => {
+      localStorage.setItem('lastName', e.values.lastName);
+      localStorage.setItem('firstName', e.values.firstName);
+      localStorage.setItem('email', e.values.email);
       emit()
     }).catch(error => {
       console.log(error)

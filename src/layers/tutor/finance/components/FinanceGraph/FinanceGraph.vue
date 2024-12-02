@@ -79,7 +79,10 @@ const setChartData = (data?: Ref<Graph>) => {
     ]
   };
 };
+
+
 const setChartOptions = () => {
+
   // const documentStyle = getComputedStyle(document.documentElement);
   const textColor = useCssVar('--main-text', document.documentElement);
   const textColorSecondary = useCssVar('--gray-text', document.documentElement);
@@ -118,6 +121,8 @@ const setChartOptions = () => {
         display: true,
         position: 'left',
         suggestedMin: 0,
+
+        beginAtZero: true,
         ticks: {
           color: textColorSecondary.value
         },
@@ -127,6 +132,8 @@ const setChartOptions = () => {
         display: true,
         position: 'right',
         suggestedMin: 0,
+
+        beginAtZero: true,
         ticks: {
           color: textColorSecondary.value
         },

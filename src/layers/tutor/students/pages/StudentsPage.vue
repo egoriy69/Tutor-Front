@@ -2,10 +2,10 @@
   <div :class='$style.wrapper'>
     <div style="display: flex;gap: 20px; width: 100%;">
       <SelectButton v-model="activeStatus" :options="options" :class="$style.selectBtn"
-        :optionLabel="(option) => option === ActiveStatus.ACTIVE ? 'Активные' : 'Заявки'" />
+        optionLabel="name" optionValue="value"/>
       <Button as="router-link" label="Создать студента" :to="{ name: 'studentForm' }" />
     </div>
-    <DataTable :value="data?.studentsList" paginator :rows="size" tableStyle="min-width: 50rem" :class="$style.table"
+    <DataTable :value="data?.studentsList" paginator :rows="size" :class="$style.table"
       :dataKey="(student) => student.id" :rowsPerPageOptions="[5, 10, 20]" :totalRecords="data?.totalElements"
       @update:rows="(e) => size = e" v-on:page="(e) => page = e.page" :lazy="true"
       @row-click="(e) => $router.push({ name: 'studentForm', params: { id: e.data.id }, query: { status: activeStatus } })">
@@ -22,15 +22,18 @@ import { useQuery } from '@tanstack/vue-query';
 import { studentsPageService } from '../studentsPageService';
 import { Button, Column, DataTable, SelectButton } from 'primevue';
 import { ref, } from 'vue';
-import { ActiveStatus } from '@/app/enums/ActiveStatus';
+import { ActiveStatus, ActiveStatusName } from '@/app/enums/ActiveStatus';
 
 
 const activeStatus = ref(ActiveStatus.ACTIVE);
-const options = ref([ActiveStatus.ACTIVE, ActiveStatus.REQUEST]);
-
+const options = ref([
+  { name: ActiveStatusName.ACTIVE, value: ActiveStatus.ACTIVE },
+  { name: ActiveStatusName.REQUEST, value: ActiveStatus.REQUEST },
+  { name: ActiveStatusName.NONACTIVE, value: ActiveStatus.NONACTIVE },
+]);
 const page = ref(0)
 const size = ref(10)
-const { data } = useQuery({ queryKey: ['students', size, page, activeStatus], queryFn: () => studentsPageService.getStudents({ page: page.value, size: size.value, activeStatus: activeStatus.value }) })
+const { data } = useQuery({ queryKey: ['students', {size, page, activeStatus}], queryFn: () => studentsPageService.getStudents({ page: page.value, size: size.value, activeStatus: activeStatus.value }) })
 
 </script>
 
