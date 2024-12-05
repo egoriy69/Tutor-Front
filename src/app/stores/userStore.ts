@@ -60,6 +60,9 @@ export const useUserStore = defineStore('userStore', () => {
       localStorage.setItem('lastName', e.values.lastName);
       localStorage.setItem('firstName', e.values.firstName);
       localStorage.setItem('email', e.values.email);
+      user.value.email = e.values.email
+      user.value.firstName = e.values.firstName
+      user.value.lastName = e.values.lastName
       emit()
     }).catch(error => {
       console.log(error)

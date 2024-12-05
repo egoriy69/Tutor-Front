@@ -101,7 +101,7 @@ const handleDelete = () => {
 .form {
   margin-top: 15px;
   display: flex;
-  gap: 30px;
+  gap: 15px;
   flex-direction: column;
 }
 </style>

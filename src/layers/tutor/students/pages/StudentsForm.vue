@@ -50,7 +50,7 @@ const queryClient = useQueryClient()
 type Errors = {
   firstName: Array<object>
   lastName: Array<object>
-  email: Array<object>
+  // email: Array<object>
 }
 
 const route = useRoute()
@@ -65,14 +65,14 @@ const formState = ref<Student>({
 
 const router = useRouter()
 const isCreateForm = computed(() => !!!route.params.id)
-useAutoQuery(formState, { queryKey: ['studentInfo'], queryFn: () => studentsPageService.getStudentInfo(Number(route.params.id)), retry: 1, enabled: !!route.params.id, gcTime: 0 })
+useAutoQuery(formState, { queryKey: ['studentInfo'], queryFn: () => studentsPageService.getStudentInfo(Number(route.params.id)), retry: 1, enabled: !isCreateForm.value, gcTime: 0 })
 //trigger to call authenticate function
 //form validation
 const resolver = () => {
   const errors: Errors = {
     lastName: existValidation(formState.value?.lastName, 'Введите фамилию'),
     firstName: existValidation(formState.value?.firstName, 'Введите имя'),
-    email: existValidation(formState.value?.firstName, 'Введите электронную почту'),
+    // email: existValidation(formState.value?.email, 'Введите электронную почту'),
   };
   return {
     values: formState.value,

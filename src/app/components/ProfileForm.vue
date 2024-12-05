@@ -1,10 +1,9 @@
 <template>
-  <Dialog modal header="Профиль" v-model:visible="model" :dismissableMask="true"
-    :class="$style.wrapper">
+  <Dialog modal header="Профиль" v-model:visible="model" :dismissableMask="true" :class="$style.wrapper">
     <Form v-slot="$form" :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit">
-      <InputWithError :form="$form" name="lastName" label="Фамилия*" v-model="userStore.user.lastName" />
-      <InputWithError :form="$form" name="firstName" label="Имя*" v-model="userStore.user.firstName" />
-      <InputWithError :form="$form" name="email" label="Электронная почта*" v-model="userStore.user.email" />
+      <InputWithError :form="$form" name="lastName" label="Фамилия*" v-model="formState.lastName" />
+      <InputWithError :form="$form" name="firstName" label="Имя*" v-model="formState.firstName" />
+      <InputWithError :form="$form" name="email" label="Электронная почта*" v-model="formState.email" />
       <Button type="submit" label="Редактировать" />
     </Form>
   </Dialog>
@@ -19,6 +18,8 @@ import InputWithError from '@/app/components/InputWithError.vue';
 
 import { existValidation } from '@/app/utils/validation';
 import { useUserStore } from '../stores/userStore';
+import { ref, watch } from 'vue';
+
 
 const emit = defineEmits<{
   (e: 'update:modelValue', payload: boolean): void
@@ -31,22 +32,31 @@ type Errors = {
   lastName: Array<object>
   email: Array<object>
 }
-
 const userStore = useUserStore()
+const formState = ref({
+  lastName: JSON.parse(JSON.stringify(userStore.user.lastName)),
+  firstName: JSON.parse(JSON.stringify(userStore.user.firstName)),
+  email: JSON.parse(JSON.stringify(userStore.user.email)),
+})
+watch(model,()=>{
+  formState.value.email = JSON.parse(JSON.stringify(userStore.user.email))
+  formState.value.firstName = JSON.parse(JSON.stringify(userStore.user.firstName))
+  formState.value.lastName = JSON.parse(JSON.stringify(userStore.user.lastName))
+})
 
 //trigger to call authenticate function
 //form validation
 const resolver = () => {
   const errors: Errors = {
-    firstName: existValidation(userStore.user.lastName, 'Введите имя'),
-    lastName: existValidation(userStore.user.firstName, 'Введите фамилию'),
-    email: existValidation(userStore.user.email, 'Введите электронную почту'),
+    firstName: existValidation(formState.value.lastName, 'Введите имя'),
+    lastName: existValidation(formState.value.firstName, 'Введите фамилию'),
+    email: existValidation(formState.value.email, 'Введите электронную почту'),
   };
   return {
     values: {
-      email:userStore.user.email,
-      firstName:userStore.user.firstName,
-      lastName:userStore.user.lastName
+      email: formState.value.email,
+      firstName: formState.value.firstName,
+      lastName: formState.value.lastName
     },
     errors: errors
   };
