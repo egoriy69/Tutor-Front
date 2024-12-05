@@ -8,8 +8,8 @@
     <DataTable :value="data?.lessonsList" paginator :rows="size" tableStyle="min-width: 50rem" :class="$style.table"
       :dataKey="(student) => student.id" :rowsPerPageOptions="[5, 10, 20]" :totalRecords="data?.totalElements"
       @update:rows="(e) => size = e" v-on:page="(e) => page = e.page" :lazy="true"
-      @row-click="(e) => $router.push({ name: 'lessonsForm', params: { id: e.data.id } })" sortField="paid"
-      :sortOrder="1" v-on:sort="(e) => e.sortOrder === -1 ? sortOrder = 1 : sortOrder = 0">
+      @row-click="(e) => $router.push({ name: 'lessonsForm', params: { id: e.data.id } })" removableSort
+      v-on:sort="(e) => sortOrder = e.sortOrder">
       <Column field="fullName" header="Ученик" style="width: 15%" v-if="$route.path.startsWith('/tutor')"></Column>
       <Column field="grade" header="Класс" style="width: 5%;text-align: center;"
         v-if="$route.path.startsWith('/tutor')"></Column>
@@ -55,7 +55,7 @@ import MiroLink from '../components/MiroLink.vue';
 import StudentsSelect from '../components/StudentsSelect.vue';
 
 
-const sortOrder = ref(0)
+const sortOrder = ref(null)
 const studentId = ref(null)
 const page = ref(0)
 const size = ref(10)

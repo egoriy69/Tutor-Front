@@ -9,8 +9,8 @@ import { dateToJSONNoLocale, ISOToDateNoLocale } from "@/app/utils/date";
 
 
 export const lessonsService = {
-  getLessons: async ({ page, size, studentId, sortOrder }: { page: number, size: number, studentId: number | null, sortOrder: number }) => {
-    const response = await apiClient.get(`/lesson/get?page=${page}&size=${size}&studentId=${studentId ?? ''}&paid=${sortOrder}`)
+  getLessons: async ({ page, size, studentId, sortOrder }: { page: number, size: number, studentId: number | null, sortOrder: number | null }) => {
+    const response = await apiClient.get(`/lesson/get?page=${page}&size=${size}&paid=${sortOrder||''}&studentId=${studentId ?? ''}`)
     return { lessonsList: response.data._embedded.showListLessonsDTOList, totalElements: response.data.page.totalElements }
   },
   getLessonInfo: async (id: number) => {

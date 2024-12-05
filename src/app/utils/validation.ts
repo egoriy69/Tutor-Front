@@ -10,9 +10,10 @@ export const existValidation = (field: string | number | null | undefined, messa
 export const regexValidation = (
   field: string | number | null | undefined,
   message: string,
-  regex?: RegExp
+  regex?: RegExp,
+  optional?: boolean
 ) => {
-  const errors = [];
+  let errors = [];
 
   // Проверка на существование значения
   if (!field) {
@@ -23,11 +24,13 @@ export const regexValidation = (
   if (regex && typeof field === 'string' && !regex.test(field)) {
     errors.push({ message: message });
   }
-
+  if (!field && optional) {
+    errors = [];
+  }
   return errors;
 };
 
-export const emailValidation = (field:string|null|undefined,message:string) => {
+export const emailValidation = (field: string | null | undefined, message: string) => {
   const errors = [];
 
   // Проверка на существование значения

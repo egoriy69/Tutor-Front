@@ -80,7 +80,7 @@ useAutoQuery(formState, { queryKey: ['lessonInfo'], queryFn: () => lessonsServic
 const resolver = () => {
   const errors: { studentId: Array<object>, miroLink: Array<object> } = {
     studentId: existValidation(formState.value?.studentId, 'Выберите студента'),
-    miroLink: regexValidation(formState.value?.miroLink, 'Введите корректную ссылку', /^https:\/\/miro\..+/),
+    miroLink: regexValidation(formState.value?.miroLink, 'Введите корректную ссылку', /^https:\/\/miro\..+/, true),
   };
   return {
     values: formState.value,
