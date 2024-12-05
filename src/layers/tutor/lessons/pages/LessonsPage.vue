@@ -31,7 +31,7 @@
             style="display: flex;justify-content: center;pointer-events: none;" />
         </template>
       </Column>
-      <Column field="homeWork" header="Задание" style="width: 12%;text-align: center;">
+      <Column field="homeWork" header="Задание" style="width: 15%;text-align: center;">
         <template #body="slotProps">
           <HomeWorkName :name="slotProps.data.homeWork" />
         </template>

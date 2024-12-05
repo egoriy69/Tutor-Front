@@ -44,7 +44,7 @@ export const authService = {
   register: async ({ e, route }: { e: FormSubmitEvent, route: RouteLocationNormalizedLoaded }) => {
     const body = { ...e.values }
     delete body.confirmPassword
-    apiClient.post(`/auth/registration/${route.params.regToken}`, body, { headers: { 'Authorization': '' } }).then(response => {
+    apiClient.post(`/auth/registration/${route.params.regToken||''}`, body, { headers: { 'Authorization': '' } }).then(response => {
       successAuth(response)
     }).catch(error => {
       emailError(error, e)

@@ -1,6 +1,6 @@
 <template>
   <div :class='$style.wrapper'>
-    <img src="@/app/assets/images/logo-cutted.png" />
+    <img src="@/app/assets/images/logo/logo-white.png" />
     <RouterView v-slot="{ Component }">
       <Transition name="auth">
         <Component :is="Component" />

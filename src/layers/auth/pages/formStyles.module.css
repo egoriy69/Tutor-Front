@@ -4,6 +4,16 @@
       flex-direction: column;
       gap: 15px;
 
+      & :global(.p-button-label) {
+         font-weight: 700;
+      }
+      & :global(.p-button) {
+         background-color: var(--ui-surface-800);
+         &:hover{
+            background-color: var(--ui-surface-700);
+         }
+      }
+     
       &>h2 {
          font-size: 1.6rem;
          text-align: center;
@@ -26,7 +36,15 @@
    width: fit-content;
    font-size: 1rem;
    color: var(--gray-text);
-   &:hover{
+
+   &:hover {
       color: var(--gray-text-hover);
+   }
+}
+
+:global(.dark) .wrapper :global(.p-button){
+   background-color: var(--ui-surface-200);
+   &:hover{
+      background-color: var(--ui-surface-400);
    }
 }
