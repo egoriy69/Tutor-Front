@@ -1,6 +1,6 @@
 <template>
   <FloatLabel>
-    <Select v-model="model" :options="studentsOptions" optionLabel="name" name="studentId" fluid optionValue="value" />
+    <Select v-model="model" :options="studentsOptions" showClear optionLabel="name" name="studentId" fluid optionValue="value" />
     <label for="studentId">Ученик</label>
   </FloatLabel>
 </template>

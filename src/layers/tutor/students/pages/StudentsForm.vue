@@ -35,7 +35,7 @@ import { computed, ref } from 'vue';
 import type { Student } from '../StudentsPageTypes';
 import { studentsPageService } from '../studentsPageService';
 import InputWithError from '@/app/components/InputWithError.vue';
-import { existValidation } from '@/app/utils/validation';
+import { emailValidation, existValidation } from '@/app/utils/validation';
 import { useQueryClient } from '@tanstack/vue-query';
 import { useAutoQuery } from '@/app/composables/useAutoQuery';
 import { useRoute, useRouter } from 'vue-router';
@@ -50,7 +50,7 @@ const queryClient = useQueryClient()
 type Errors = {
   firstName: Array<object>
   lastName: Array<object>
-  // email: Array<object>
+  email: Array<object>
 }
 
 const route = useRoute()
@@ -72,7 +72,7 @@ const resolver = () => {
   const errors: Errors = {
     lastName: existValidation(formState.value?.lastName, 'Введите фамилию'),
     firstName: existValidation(formState.value?.firstName, 'Введите имя'),
-    // email: existValidation(formState.value?.email, 'Введите электронную почту'),
+    email: emailValidation(formState.value?.email, 'Введите корректную электронную почту'),
   };
   return {
     values: formState.value,
