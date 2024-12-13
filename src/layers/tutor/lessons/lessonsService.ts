@@ -3,7 +3,7 @@ import type { FormSubmitEvent } from "@primevue/forms";
 import { apiClient } from "@/app/api";
 import type { QueryClient } from "@tanstack/vue-query";
 import type { Router } from "vue-router";
-import { dateToJSONNoLocale, ISOToDateNoLocale } from "@/app/utils/date";
+import { dateToJSONNoLocale } from "@/app/utils/date";
 import dayjs from "dayjs";
 import { CalendarEventType } from "@/app/enums/CalendarEnums";
 
