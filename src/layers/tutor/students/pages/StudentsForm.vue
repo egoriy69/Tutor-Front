@@ -72,7 +72,7 @@ const resolver = () => {
   const errors: Errors = {
     lastName: existValidation(formState.value?.lastName, 'Введите фамилию'),
     firstName: existValidation(formState.value?.firstName, 'Введите имя'),
-    email: emailValidation(formState.value?.email, 'Введите корректную электронную почту'),
+    email: emailValidation(formState.value?.email, 'Введите корректную электронную почту',true),
   };
   return {
     values: formState.value,

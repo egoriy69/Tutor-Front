@@ -1,5 +1,6 @@
 <template>
   <BaseHeader>
+    <RouterLink :to="{ name: 'calendar' }">Календарь</RouterLink>
     <RouterLink :to="{ name: 'lessons' }">Уроки</RouterLink>
     <RouterLink :to="{ name: 'finance' }">Финансы</RouterLink>
     <RouterLink :to="{ name: 'students' }">Ученики</RouterLink>

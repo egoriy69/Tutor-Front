@@ -17,8 +17,4 @@ const model = defineModel()
 </script>
 
 <style module>
-/* .select{
-  width: 100%;
-  max-width: 150px;
-} */
 </style>

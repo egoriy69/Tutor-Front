@@ -1,7 +1,8 @@
 
-export const existValidation = (field: string | number | null | undefined, message: string) => {
+export const existValidation = (field: string[] | string | number | null | undefined | Date, message: string) => {
   const errors = [];
-  if (!field) {
+
+  if (!field || (Array.isArray(field) && field.length === 0)||(field instanceof Date && isNaN(field.getTime()))) {
     errors.push({ message: message });
   }
   return errors;
@@ -30,8 +31,8 @@ export const regexValidation = (
   return errors;
 };
 
-export const emailValidation = (field: string | null | undefined, message: string) => {
-  const errors = [];
+export const emailValidation = (field: string | null | undefined, message: string, optional: boolean) => {
+  let errors = [];
 
   // Проверка на существование значения
   if (!field) {
@@ -42,7 +43,9 @@ export const emailValidation = (field: string | null | undefined, message: strin
   if (typeof field === 'string' && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(field)) {
     errors.push({ message: message });
   }
-
+  if (!field && optional) {
+    errors = [];
+  }
   return errors;
 }
 

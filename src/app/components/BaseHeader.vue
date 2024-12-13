@@ -64,7 +64,7 @@ const logOut = () => {
       }
 
       &:global(.router-link-active) {
-        color: var(--ui-primary-color);
+        color: var(--ui-primary-400);
       }
     }
   }
