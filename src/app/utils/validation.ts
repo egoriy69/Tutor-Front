@@ -30,8 +30,8 @@ export const regexValidation = (
   return errors;
 };
 
-export const emailValidation = (field: string | null | undefined, message: string) => {
-  const errors = [];
+export const emailValidation = (field: string | null | undefined, message: string,optional?:boolean) => {
+  let errors = [];
 
   // Проверка на существование значения
   if (!field) {
@@ -41,6 +41,9 @@ export const emailValidation = (field: string | null | undefined, message: strin
   // Проверка на соответствие регулярному выражению, если оно передано
   if (typeof field === 'string' && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(field)) {
     errors.push({ message: message });
+  }
+  if (!field && optional) {
+    errors = [];
   }
 
   return errors;
