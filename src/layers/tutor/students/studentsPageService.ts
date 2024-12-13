@@ -7,7 +7,7 @@ import type { Router } from "vue-router";
 
 
 export const studentsPageService = {
-  getStudents: async ({ page, size, activeStatus }: { page: number, size: number, activeStatus: string }) => {
+  getStudents: async ({ page, size, activeStatus = 'ACTIVE' }: { page: number, size: number, activeStatus: string|null }) => {
     const response = await apiClient.get(`/student/get/${activeStatus}?page=${page}&size=${size}`)
     const studentsList = response?.data?._embedded?.getUserDTOList || []
     return { studentsList: studentsList, totalElements: response.data.page.totalElements }

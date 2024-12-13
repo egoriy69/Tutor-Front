@@ -1,6 +1,7 @@
 import '@tanstack/vue-query';
 import axios, { AxiosError } from 'axios';
 import { useUserStore } from './stores/userStore';
+import { redirectRole } from './utils/redirectRole';
 
 
 
@@ -40,15 +41,19 @@ apiClient.interceptors.request.use(
 // Функция для обновления токена
 async function refreshToken() {
   const userStore = useUserStore();
-  try {
-    const response = await axios.post(`${BASE_URL}/auth/refreshToken`, {
-      refreshToken: localStorage.getItem('refreshToken'),
-    });
-    userStore.setAccessToken(response.data.accessToken); // Сохраняем новый accessToken
-    return response.data.accessToken;
-  } catch (error) {
-    userStore.clearUser(); // Выход из аккаунта, если обновление токена не удалось
-    throw error;
+  if (localStorage.getItem('refreshToken')) {
+    try {
+      const response = await axios.post(`${BASE_URL}/auth/refreshToken`, {
+        refreshToken: localStorage.getItem('refreshToken'),
+      });
+      userStore.setAccessToken(response.data.accessToken); // Сохраняем новый accessToken
+      return response.data.accessToken;
+    } catch (error) {
+      userStore.clearUser(); // Выход из аккаунта, если обновление токена не удалось
+      throw error;
+    }
+  }else{
+    redirectRole()
   }
 }
 

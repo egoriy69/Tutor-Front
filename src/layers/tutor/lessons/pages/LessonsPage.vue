@@ -55,7 +55,7 @@ import MiroLink from '../components/MiroLink.vue';
 import StudentsSelect from '../components/StudentsSelect.vue';
 
 
-const sortOrder = ref(null)
+const sortOrder = ref()
 const studentId = ref(null)
 const page = ref(0)
 const size = ref(10)

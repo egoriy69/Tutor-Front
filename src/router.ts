@@ -115,6 +115,18 @@ const router = createRouter({
             }
           ]
         },
+        {
+          path: 'calendar',
+          name: 'calendar',
+          component: () => import('./layers/tutor/calendar/pages/CalendarPage.vue'),
+          children: [
+            {
+              path: 'form/:id?',
+              name: 'categoryForm',
+              component: () => import('./layers/tutor/finance/components/CategoryTable/CategoryForm.vue')
+            },
+          ]
+        },
 
       ]
     },

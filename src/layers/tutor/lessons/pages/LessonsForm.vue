@@ -2,44 +2,16 @@
   <Dialog modal :header="isCreateForm ? 'Создать урок' : 'Редактировать урок'" v-model:visible="visible"
     v-on:hide="$router.go(-1)" :dismissableMask="true" :class="$style.wrapper" :contentClass="$style.content">
     <Form :class="$style.form" :validateOnValueUpdate="true" :resolver @submit="onFormSubmit" autocomplete="off">
-      <div :class="$style.container">
-        <FloatLabel>
-          <InputNumber v-model="formState.cost" inputId="cost" fluid />
-          <label for="cost">Цена</label>
-        </FloatLabel>
-        <DurationSelect v-model="formState.duration" />
-        <FloatLabel>
-          <InputText v-model="formState.miroLink" name="miroLink" fluid />
-          <label for="miroLink">Ссылка на миро</label>
-        </FloatLabel>
-        <CategorySelect v-model="formState.categoryId" />
-        <HomeWorkSelect v-model="formState.homeWork" />
-        <StudentsSelect v-model="formState.studentId" />
-      </div>
-      <div :class="$style.splitContainer">
-        <div :class="$style.container">
-          <FloatLabel>
-            <Textarea v-model="formState.shortDescription" name="shortDescription" :rows="5" fluid style="resize: none"
-              autocomplete="off" />
-            <label for="shortDescription">Краткое описание</label>
-          </FloatLabel>
-          <FloatLabel style="height: fit-content;">
-            <DatePicker v-model="formState.date" dateFormat="dd.mm.yy" showIcon hourFormat="24" fluid
-              inputId="over_label" :manualInput="true" />
-            <label for="over_label">Дата</label>
-          </FloatLabel>
-          <BaseCheckbox v-model="formState.paid" name="paid" label="Оплачен" />
-        </div>
-        <Button type="submit" :label="isCreateForm ? 'Создать' : 'Редактировать'" />
-        <Button label="Удалить" v-if="!isCreateForm" severity="danger" variant="outlined" @click="handleDelete" />
-      </div>
+      <LessonFormFields v-model="formState" />
+      <Button type="submit" :label="isCreateForm ? 'Создать' : 'Редактировать'" />
+      <Button label="Удалить" v-if="!isCreateForm" severity="danger" variant="outlined" @click="handleDelete" />
     </Form>
   </Dialog>
 </template>
 
 <script setup lang='ts'>
 import { Form, type FormSubmitEvent } from '@primevue/forms';
-import { Button, DatePicker, Dialog, FloatLabel, InputNumber, InputText, Textarea } from 'primevue';
+import { Button, Dialog, } from 'primevue';
 import { computed, ref } from 'vue';
 
 
@@ -49,13 +21,11 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { lessonsService } from '../lessonsService';
 import type { Lesson } from '../LessonsTypes';
-import DurationSelect from '../components/DurationSelect.vue';
-import CategorySelect from '../components/CategorySelect.vue';
-import HomeWorkSelect from '../components/HomeWorkSelect.vue';
 import { LessonStatus } from '@/app/enums/LessonStatus';
-import StudentsSelect from '../components/StudentsSelect.vue';
 import { existValidation, regexValidation } from '@/app/utils/validation';
-import BaseCheckbox from '@/app/components/UI/BaseCheckbox.vue';
+import LessonFormFields from '../components/LessonFormFields.vue';
+import { rangeValidation } from '../../components/TimePicker/rangeValidations';
+
 
 
 const visible = ref(true);
@@ -64,23 +34,35 @@ const route = useRoute()
 const router = useRouter()
 const isCreateForm = computed(() => !!!route.params.id)
 const formState = ref<Lesson>({
-  duration: null,
+  // duration: null,
   miroLink: '',
   shortDescription: '',
   cost: null,
   categoryId: 1,
-  studentId: null,
+  studentId: [],
   homeWork: LessonStatus.PROCESSING,
   paid: false,
+  startTime: '',
+  endTime: '',
   date: new Date
 });
 useAutoQuery(formState, { queryKey: ['lessonInfo'], queryFn: () => lessonsService.getLessonInfo(Number(route.params.id)), retry: 1, enabled: !!route.params.id, gcTime: 0 })
 //trigger to call authenticate function
 //form validation
+type Errors = {
+  studentId: Array<object>,
+  miroLink: Array<object>,
+  startTime: Array<object>,
+  endTime: Array<object>,
+  date: Array<object>,
+}
 const resolver = () => {
-  const errors: { studentId: Array<object>, miroLink: Array<object> } = {
+  const errors: Errors = {
     studentId: existValidation(formState.value?.studentId, 'Выберите студента'),
+    date: existValidation(formState.value?.date, 'Выберите дату'),
     miroLink: regexValidation(formState.value?.miroLink, 'Введите корректную ссылку', /^https:\/\/miro\..+/, true),
+    startTime: rangeValidation(formState.value?.startTime, formState.value?.endTime, 'Введите корректное время'),
+    endTime: rangeValidation(formState.value?.startTime, formState.value?.endTime, 'Введите корректное время'),
   };
   return {
     values: formState.value,
@@ -132,16 +114,32 @@ const handleDelete = () => {
 
 .form {
   display: flex;
+  flex-direction: column;
   gap: 20px;
   justify-content: space-between;
   flex-grow: 1;
 }
 
-.container {
+.form>ul {
+  display: grid;
+  gap: 25px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "item1 item2"
+    "item6 item3"
+    "item7 item4"
+    "desc item5"
+    "desc item5";
+
+  & span[name="shortDescription"] {
+    grid-area: desc;
+  }
+}
+
+/* .container {
   display: flex;
   flex-direction: column;
   gap: 25px;
-  /* justify-content: space-between; */
   flex: 1 1 0;
   max-width: 400px;
   width: 100%;
@@ -155,5 +153,5 @@ const handleDelete = () => {
   flex: 1 1 0;
   max-width: 400px;
   width: 100%;
-}
+} */
 </style>
